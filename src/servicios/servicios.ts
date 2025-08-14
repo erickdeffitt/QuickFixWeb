@@ -24,7 +24,7 @@ export class Servicios{
     TelSop: "1234567",
   }
 
-  ApiUrl: string = "http://45.91.108.32/quickfix/";
+  ApiUrl: string = "http://192.142.2.146/quickfix/";
   // ApiUrl: string = "https://api.quickfixapp.com/";
 
   LatLon: any = {
@@ -36,17 +36,17 @@ export class Servicios{
   };
 
   Pais: any = {
-    Nombre: "Panamá",
-    Codigo: "+507",
-    CodWha: "507",
-    Bandera:"banpan.png",
+    Nombre: "Mexico",
+    Codigo: "+52",
+    CodWha: "52",
+    Bandera:"banmex.png",
     Ayuda:"https://quickfix.com/page/ayuda",
     TerCon:"https://quickfix.com/page/terminos",
     PolDat:"https://quickfix.com/page/politicas",
     SimMon:"$",
     DecMon:"2",
-    Lat:"8.98057981302293",
-    Lon:"-79.52717798319162"
+    Lat:"19.433021004809355",
+    Lon:"-99.13516746685117"
   }
 
   DGF: any = {};
@@ -360,6 +360,24 @@ export class Servicios{
     let DiaAla: number = 0;
     switch (PagAct) {
 
+      case "Asistencias":
+        switch (Dat) {
+          case "Nueva":
+            return "#52b686ff";
+          case "Asignada":
+            return "#228ebdff";
+          case "En proceso":
+            return "#8832cf";
+          case "Atendida":
+            return "#32ad32";
+          case "Entregada":
+            return "#32ad32";
+          case "Cancelada":
+            return "#cf5132";
+          default:
+            return "#8832cf";
+        }
+
       case "Pagos":
         switch (Dat) {
           case "Nuevo":
@@ -611,6 +629,8 @@ export class Servicios{
     switch(Cmp.Tip){
       case "Texto":
         return Valor;
+      case "Password":
+        return atob(Valor);
       case "DiaSem":
         let TDS = "";
         let MND = Valor.split(",");

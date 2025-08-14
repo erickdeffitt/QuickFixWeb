@@ -83,6 +83,16 @@ export class AdmComponent {
   DonBus: string = "";
   OJE: any = [];
 
+  //////////Asignacion//////////
+  @ViewChild('CloModAsi') CloModAsi: ElementRef;
+
+
+
+
+
+
+
+
   //////////Cupones//////////
   @ViewChild('CloModCup') CloModCup: ElementRef;
   @ViewChild('mapA') mapRefA: ElementRef;
@@ -230,7 +240,7 @@ export class AdmComponent {
   }
 
   ActGraA(){
-    this.servicios.AccSobBDAA("SELECT","Si","MONTH(FecHorEve) Mes, COUNT(FecHorEve) TM","","","eventos","WHERE "+(this.servicios.UsuMat.Tipo == "Proveedor" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Mes","",true).then((dataRes)=>{
+    this.servicios.AccSobBDAA("SELECT","Si","MONTH(FecHorEve) Mes, COUNT(FecHorEve) TM","","","eventos","WHERE "+(this.servicios.UsuMat.Tipo == "Tecnico" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Mes","",true).then((dataRes)=>{
       let Res: any = dataRes;
       console.log(Res);
       let DatMes = [0,0,0,0,0,0,0,0,0,0,0,0]
@@ -242,7 +252,7 @@ export class AdmComponent {
   }
 
   ActGraB(){
-    this.servicios.AccSobBDAA("SELECT","Si","(SELECT Nombre FROM categorias WHERE NRegistro=A.Categorias) NC, COUNT(Categorias) TC","","","servicios A","WHERE "+(this.servicios.UsuMat.Tipo == "Proveedor" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Categorias","",true).then((dataRes)=>{
+    this.servicios.AccSobBDAA("SELECT","Si","(SELECT Nombre FROM categorias WHERE NRegistro=A.Categorias) NC, COUNT(Categorias) TC","","","servicios A","WHERE "+(this.servicios.UsuMat.Tipo == "Tecnico" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Categorias","",true).then((dataRes)=>{
       let Res: any = dataRes;
       // console.log(Res);
       let EtiCat = []
@@ -260,7 +270,7 @@ export class AdmComponent {
   }
 
   ActGraC(){
-    this.servicios.AccSobBDAA("SELECT","Si","(SELECT Nombre FROM categorias WHERE NRegistro=A.Categorias) NC, COUNT(Categorias) TC","","","servicios A","WHERE "+(this.servicios.UsuMat.Tipo == "Proveedor" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Categorias","",true).then((dataRes)=>{
+    this.servicios.AccSobBDAA("SELECT","Si","(SELECT Nombre FROM categorias WHERE NRegistro=A.Categorias) NC, COUNT(Categorias) TC","","","servicios A","WHERE "+(this.servicios.UsuMat.Tipo == "Tecnico" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Categorias","",true).then((dataRes)=>{
       let Res: any = dataRes;
       // console.log(Res);
       let DatCat = [];
@@ -274,7 +284,7 @@ export class AdmComponent {
   }
 
   ActGraD(){
-    this.servicios.AccSobBDAA("SELECT","Si","MONTH(FecHorEve) Mes, COUNT(FecHorEve) TM","","","eventos","WHERE "+(this.servicios.UsuMat.Tipo == "Proveedor" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Mes","",true).then((dataRes)=>{
+    this.servicios.AccSobBDAA("SELECT","Si","MONTH(FecHorEve) Mes, COUNT(FecHorEve) TM","","","eventos","WHERE "+(this.servicios.UsuMat.Tipo == "Tecnico" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Mes","",true).then((dataRes)=>{
       let Res: any = dataRes;
       // console.log(Res);
       let DatMes = [0,0,0,0,0,0,0,0,0,0,0,0]
@@ -292,7 +302,7 @@ export class AdmComponent {
   //////////////////////////////////Login//////////////////////////////////////
   Login(){
     if(this.Email != "" && this.Pass != "" || this.Token != ""){
-      this.servicios.AccSobBDAA("LOGINADM","Si","",this.Email+","+this.Pass+","+this.Token,"","","","","",true).then((dataRes)=>{
+      this.servicios.AccSobBDAA("LOGINADM","Si","",this.Email+","+btoa(this.Pass)+","+this.Token,"","","","","",true).then((dataRes)=>{
         let Res: any = dataRes;
         //console.log(Res);
     
@@ -385,7 +395,7 @@ export class AdmComponent {
   ActPer(){
     if (!this.servicios.ValCam("Nombre","Nombre","Texto",this.servicios.UsuMat.Nombre,"Si")){return;}
 
-    if (this.servicios.UsuMat.Tipo != 'Proveedor'){
+    if (this.servicios.UsuMat.Tipo != 'Tecnico'){
       if (!this.servicios.ValCam("Apellido","Apellido","Texto",this.servicios.UsuMat.Apellido,"Si")){return;}
     }else{
       if (!this.servicios.ValCam("Descripcion","Descripción","Texto",this.servicios.UsuMat.Descripcion,"Si")){return;}
@@ -395,7 +405,7 @@ export class AdmComponent {
     if (!this.servicios.ValCam("CodPai","Código Pais","CodPai",this.servicios.UsuMat.CodPai,"Si")){return;}
     if (!this.servicios.ValCam("Telefono","Teléfono","Telefono",this.servicios.UsuMat.Telefono,"Si")){return;}
 
-    if (this.servicios.UsuMat.Tipo == 'Proveedor'){
+    if (this.servicios.UsuMat.Tipo == 'Tecnico'){
       if (!this.servicios.ValCam("WebSite","WebSite","Texto",this.servicios.UsuMat.WebSite,"Si")){return;}
       if (!this.servicios.ValCam("Horario","Horario","Texto",this.servicios.UsuMat.Horario,"Si")){return;}
       if (!this.servicios.ValCam("Descuento","Descuento","Porcentaje",this.servicios.UsuMat.Descuento,"Si")){return;}
@@ -581,14 +591,14 @@ export class AdmComponent {
 
     var FilUsu: string = "";
     switch(this.MemPar){
-      case "Proveedores":
-        FilUsu = "WHERE Tipo = |Proveedor|";
+      case "Técnicos":
+        FilUsu = "WHERE Tipo = |Tecnico|";
       break;
       case "Clientes":
         FilUsu = "WHERE Tipo = |Cliente|";
       break;
       case "Todos":
-        FilUsu = "WHERE Tipo IN (|Proveedor|,|Asesor|,|Cliente|)";
+        FilUsu = "WHERE Tipo IN (|Tecnico|,|Asesor|,|Cliente|)";
       break;
       default:
         FilUsu = "WHERE NRegistro = "+this.MemPar;
@@ -614,7 +624,7 @@ export class AdmComponent {
   }
 
   CarLisUsu(){
-    this.servicios.AccSobBDAA("SELECT","Si","*","","","usuarios","WHERE Tipo IN (|Proveedor|,|Cliente|)","ORDER BY Tipo,Nombre,Apellido","",false).then((dataRes)=>{
+    this.servicios.AccSobBDAA("SELECT","Si","*","","","usuarios","WHERE Tipo IN (|Tecnico|,|Cliente|)","ORDER BY Tipo,Nombre,Apellido","",false).then((dataRes)=>{
       let Res: any = dataRes;
       //console.log(Res);
       this.LisUsu = Res.data;
@@ -693,7 +703,7 @@ export class AdmComponent {
 
 
   CarLisMem(){
-    this.servicios.AccSobBDAA("SELECT","Si","*","","","membresias","WHERE TipUsu=|Proveedor|","ORDER BY Precio","",false).then((dataRes)=>{
+    this.servicios.AccSobBDAA("SELECT","Si","*","","","membresias","WHERE TipUsu=|Tecnico|","ORDER BY Precio","",false).then((dataRes)=>{
       let Res: any = dataRes;
       console.log(Res);
       this.LisMem = Res.data;
@@ -1633,6 +1643,11 @@ export class AdmComponent {
         this.IniGra();
       break;
 
+      case "Asistencias":
+        this.MenAct = "Servicios";
+        this.PreDGM('Asistencias');
+      break;
+
       case "Servicios":
         this.MenAct = "Servicios";
         this.PreDGM('Servicios');
@@ -1701,6 +1716,15 @@ export class AdmComponent {
         this.PreDGM('Movimientos');
       break;
 
+      case "Herramientas":
+        this.MenAct = "Datos";
+        this.PreDGM('Herramientas');
+      break;
+      case "Productos":
+        this.MenAct = "Datos";
+        this.PreDGM('Productos');
+      break;
+
       case "Categorías":
         this.MenAct = "Datos";
         this.PreDGM('Categorías');
@@ -1713,9 +1737,9 @@ export class AdmComponent {
         this.MenAct = "Datos";
         this.PreDGM('Idiomas');
       break;
-      case "Parametros":
+      case "Parámetros":
         this.MenAct = "Datos";
-        this.PreDGM('Parametros');
+        this.PreDGM('Parámetros');
       break;
 
       case "Preguntas":
@@ -1731,9 +1755,9 @@ export class AdmComponent {
         this.MenAct = "Usuarios";
         this.PreDGM('Soporte');
       break;
-      case "Proveedores":
+      case "Técnicos":
         this.MenAct = "Usuarios";
-        this.PreDGM('Proveedores');
+        this.PreDGM('Técnicos');
       break;
       case "Clientes":
         this.MenAct = "Usuarios";
@@ -1772,6 +1796,46 @@ export class AdmComponent {
     let VDFA = FHA.toISOString().replace("T"," ").substring(0,10);
 
     switch (Mod) {
+
+      case "Asistencias":
+        this.DGM = {
+          Menu: "Servicios",
+          Nombre: "Asistencias",
+          CamMod:[
+            {Tit:"Tipo",Cmp:"Tipo",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Qry:{Cmps:"Nombre,Nombre",Tab:"asistenciastip",Don:"WHERE Estatus=|Activa|",Ord:"ORDER BY Nombre",Res:[]}},
+            {Tit:"Cliente",Cmp:"NRegCli",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Ocu:"No",Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Cliente|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
+            {Tit:"Descripción",Cmp:"Descripcion",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
+            {Tit:"Foto",Cmp:"Foto",Tip:"Imagen",Req:"Si",VD:"fpda.png",Val:"",Est:"",Car:"asi"},
+            {Tit:"Dirección",Cmp:"UbiDir",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
+            {Tit:"Técnico",Cmp:"NRegTec",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Ocu:"No",Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Tecnico|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
+            {Tit:"Observación",Cmp:"Observacion",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
+            {Tit:"Solicitado",Cmp:"FecHorReg",Tip:"FechaHora",Req:"Si",VD:VDFHA,Val:"",Blo:"No"},
+            {Tit:"Asignado",Cmp:"FecHorAsi",Tip:"FechaHora",Req:"No",VD:"0000-00-00 00:00:00",Val:"",Blo:"No"},
+            {Tit:"Terminado",Cmp:"FecHorTer",Tip:"FechaHora",Req:"No",VD:"0000-00-00 00:00:00",Val:"",Blo:"No"},
+            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"Nueva",Val:"",Opcs:[
+              {Val:"Nueva",Tex:"Nueva",Dis:""},
+              {Val:"Asignada",Tex:"Asignada",Dis:""},
+              {Val:"En proceso",Tex:"En proceso",Dis:""},
+              {Val:"Atendida",Tex:"Atendida",Dis:""},
+              {Val:"Entregada",Tex:"Entregada",Dis:""},
+              {Val:"Cancelada",Tex:"Cancelada",Dis:""},
+            ]},
+          ],
+          OpcFil:"Si",
+          OpcReg:"Si",
+          OpcAgr:"Si",
+          OpcMod:"Si",
+          OpcEli:"Si",
+          CamQry:"*",
+          Tabla:"asistencias",
+          Donde:"",
+          Ordena:"ORDER BY NRegistro DESC",
+          Carpeta:"asi",
+          TabFor:{"Fil":[1,2,3,4,5],"Col":[1,2]},
+        }
+      break;
+
+
       case "Servicios":
         this.DGM = {
           Menu: "Servicios",
@@ -1789,7 +1853,7 @@ export class AdmComponent {
             {Tit:"Edad Máxima",Cmp:"EdaMax",Tip:"Entero",Req:"Si",VD:"",Val:"",Blo:"No"},
             {Tit:"Registro",Cmp:"FecHorReg",Tip:"FechaHora",Req:"Si",VD:VDFHA,Val:"",Blo:"No"},
             {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"",Val:"",Opcs:[{Val:"Activo",Tex:"Activo",Dis:""},{Val:"Inactivo",Tex:"Inactivo",Dis:""}]},
-            {Tit:"Proveedor",Cmp:"NRegUsu",Tip:"SelectQry",Req:"Si",VD:(this.servicios.UsuMat.Tipo == 'Proveedor' ? this.servicios.UsuMat.NRegistro : ""),Val:"",Blo:(this.servicios.UsuMat.Tipo == 'Proveedor' ? "Si" : "No"),Ocu:(this.servicios.UsuMat.Tipo == "Admin" ? "No" : "Si"),Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Proveedor|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
+            {Tit:"Tecnico",Cmp:"NRegUsu",Tip:"SelectQry",Req:"Si",VD:(this.servicios.UsuMat.Tipo == 'Tecnico' ? this.servicios.UsuMat.NRegistro : ""),Val:"",Blo:(this.servicios.UsuMat.Tipo == 'Tecnico' ? "Si" : "No"),Ocu:(this.servicios.UsuMat.Tipo == "Admin" ? "No" : "Si"),Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Tecnico|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
           ],
           OpcFil:"Si",
           OpcReg:"Si",
@@ -1798,7 +1862,7 @@ export class AdmComponent {
           OpcEli:"Si",
           CamQry:"*",
           Tabla:"servicios",
-          Donde:(this.servicios.UsuMat.Tipo == 'Proveedor' ? "WHERE NRegUsu="+this.servicios.UsuMat.NRegistro : ""),
+          Donde:(this.servicios.UsuMat.Tipo == 'Tecnico' ? "WHERE NRegUsu="+this.servicios.UsuMat.NRegistro : ""),
           Ordena:"ORDER BY NRegistro DESC",
           Carpeta:"ser",
           TabFor:{"Fil":[1,2,3,4,5],"Col":[1,2,3]},
@@ -1823,7 +1887,7 @@ export class AdmComponent {
             {Tit:"Edad Máxima",Cmp:"EdaMax",Tip:"Entero",Req:"Si",VD:"",Val:"",Blo:"No"},
             {Tit:"Registro",Cmp:"FecHorReg",Tip:"FechaHora",Req:"Si",VD:VDFHA,Val:"",Blo:"No"},
             {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"",Val:"",Opcs:[{Val:"Activo",Tex:"Activo",Dis:""},{Val:"Inactivo",Tex:"Inactivo",Dis:""}]},
-            {Tit:"Proveedor",Cmp:"NRegUsu",Tip:"SelectQry",Req:"Si",VD:(this.servicios.UsuMat.Tipo == 'Proveedor' ? this.servicios.UsuMat.NRegistro : ""),Val:"",Blo:(this.servicios.UsuMat.Tipo == 'Proveedor' ? "Si" : "No"),Ocu:(this.servicios.UsuMat.Tipo == "Admin" ? "No" : "Si"),Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Proveedor|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
+            {Tit:"Tecnico",Cmp:"NRegUsu",Tip:"SelectQry",Req:"Si",VD:(this.servicios.UsuMat.Tipo == 'Tecnico' ? this.servicios.UsuMat.NRegistro : ""),Val:"",Blo:(this.servicios.UsuMat.Tipo == 'Tecnico' ? "Si" : "No"),Ocu:(this.servicios.UsuMat.Tipo == "Admin" ? "No" : "Si"),Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Tecnico|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
           ],
           OpcFil:"Si",
           OpcReg:"Si",
@@ -1832,7 +1896,7 @@ export class AdmComponent {
           OpcEli:"Si",
           CamQry:"*",
           Tabla:"eventos",
-          Donde:(this.servicios.UsuMat.Tipo == 'Proveedor' ? "WHERE NRegUsu="+this.servicios.UsuMat.NRegistro : ""),
+          Donde:(this.servicios.UsuMat.Tipo == 'Tecnico' ? "WHERE NRegUsu="+this.servicios.UsuMat.NRegistro : ""),
           Ordena:"ORDER BY NRegistro DESC",
           Carpeta:"eve",
           TabFor:{"Fil":[1,2,3,4,5],"Col":[1,2,3]},
@@ -1856,7 +1920,7 @@ export class AdmComponent {
             // {Tit:"Edad Máxima",Cmp:"EdaMax",Tip:"Entero",Req:"Si",VD:"",Val:"",Blo:"No"},
             // {Tit:"Registro",Cmp:"FecHorReg",Tip:"FechaHora",Req:"Si",VD:VDFHA,Val:"",Blo:"No"},
             {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"",Val:"",Opcs:[{Val:"Activo",Tex:"Activo",Dis:""},{Val:"Inactivo",Tex:"Inactivo",Dis:""}]},
-            {Tit:"Proveedor",Cmp:"NRegUsu",Tip:"SelectQry",Req:"Si",VD:(this.servicios.UsuMat.Tipo == 'Proveedor' ? this.servicios.UsuMat.NRegistro : ""),Val:"",Blo:(this.servicios.UsuMat.Tipo == 'Proveedor' ? "Si" : "No"),Ocu:(this.servicios.UsuMat.Tipo == "Admin" ? "No" : "Si"),Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Proveedor|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
+            {Tit:"Tecnico",Cmp:"NRegUsu",Tip:"SelectQry",Req:"Si",VD:(this.servicios.UsuMat.Tipo == 'Tecnico' ? this.servicios.UsuMat.NRegistro : ""),Val:"",Blo:(this.servicios.UsuMat.Tipo == 'Tecnico' ? "Si" : "No"),Ocu:(this.servicios.UsuMat.Tipo == "Admin" ? "No" : "Si"),Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Tecnico|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
           ],
           OpcFil:"Si",
           OpcReg:"Si",
@@ -1865,7 +1929,7 @@ export class AdmComponent {
           OpcEli:"Si",
           CamQry:"*",
           Tabla:"cupones",
-          Donde:(this.servicios.UsuMat.Tipo == 'Proveedor' ? "WHERE NRegUsu="+this.servicios.UsuMat.NRegistro : ""),
+          Donde:(this.servicios.UsuMat.Tipo == 'Tecnico' ? "WHERE NRegUsu="+this.servicios.UsuMat.NRegistro : ""),
           Ordena:"ORDER BY NRegistro DESC",
           Carpeta:"cup",
           TabFor:{"Fil":[1,2,3,4,5,6,7],"Col":[1,2]},
@@ -2002,7 +2066,7 @@ export class AdmComponent {
           Menu: "Datos",
           Nombre: "Definición",
           CamMod:[
-            {Tit:"Tipo de Usuario",Cmp:"TipUsu",Tip:"Select",Req:"Si",VD:"",Val:"",Opcs:[{Val:"Cliente",Tex:"Cliente",Dis:""},{Val:"Proveedor",Tex:"Proveedor",Dis:""}]},
+            {Tit:"Tipo de Usuario",Cmp:"TipUsu",Tip:"Select",Req:"Si",VD:"",Val:"",Opcs:[{Val:"Cliente",Tex:"Cliente",Dis:""},{Val:"Tecnico",Tex:"Tecnico",Dis:""}]},
             {Tit:"Descripción",Cmp:"Descripcion",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No"},
             {Tit:"Beneficios",Cmp:"Beneficios",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
             // {Tit:"Días de Duración",Cmp:"Duracion",Tip:"Entero",Req:"Si",VD:"",Val:"",Blo:"No"},
@@ -2033,7 +2097,7 @@ export class AdmComponent {
           Menu: "Datos",
           Nombre: "Pagos",
           CamMod:[
-            {Tit:"Usuario",Cmp:"NRegUsu",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo IN (|Proveedor|,|Cliente|)",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
+            {Tit:"Usuario",Cmp:"NRegUsu",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo IN (|Tecnico|,|Cliente|)",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
             {Tit:"Membresía",Cmp:"NRegMem",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Qry:{Cmps:"NRegistro,Descripcion",Tab:"membresias",Don:"",Ord:"ORDER BY Descripcion",Res:[]}},
             {Tit:"Monto",Cmp:"Monto",Tip:"Moneda",Req:"Si",VD:"",Val:"",Blo:"No"},
             {Tit:"Duración",Cmp:"Duracion",Tip:"Entero",Req:"Si",VD:"",Val:"",Blo:"No"},
@@ -2080,6 +2144,61 @@ export class AdmComponent {
         }
       break;
 
+      case "Herramientas":
+        this.DGM = {
+          Menu: "Datos",
+          Nombre: "Herramientas",
+          CamMod:[
+            {Tit:"Tipo",Cmp:"Tipo",Tip:"Select",Req:"Si",VD:"",Val:"",Blo:"No",Opcs:[{Val:"Renta",Tex:"Renta",Dis:""},{Val:"Venta",Tex:"Venta",Dis:""}]},
+            {Tit:"Foto",Cmp:"Foto",Tip:"Imagen",Req:"Si",VD:"fpdh.png",Val:"",Est:"",Car:"her"},
+            {Tit:"Nombre",Cmp:"Nombre",Tip:"Texto",Req:"Si",VD:"",Val:""},
+            {Tit:"Marca",Cmp:"Marca",Tip:"Texto",Req:"No",VD:"",Val:""},
+            {Tit:"Modelo",Cmp:"Modelo",Tip:"Texto",Req:"No",VD:"",Val:""},
+            {Tit:"Precio",Cmp:"Precio",Tip:"Moneda",Req:"Si",VD:"",Val:"",Blo:"No"},
+            {Tit:"Existencia",Cmp:"Existencia",Tip:"Entero",Req:"Si",VD:"",Val:"",Blo:"No"},
+            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"Activa",Val:"",Blo:"No",Opcs:[{Val:"Activa",Tex:"Activa",Dis:""},{Val:"Inactiva",Tex:"Inactiva",Dis:""}]}
+          ],
+          OpcFil:"Si",
+          OpcReg:"Si",
+          OpcAgr:"Si",
+          OpcMod:"Si",
+          OpcEli:"Si",
+          CamQry:"*",
+          Tabla:"herramientasdis",
+          Donde:"",
+          Ordena:"ORDER BY Nombre",
+          Carpeta:"her",
+          TabFor:{"Fil":[1,2,3,4],"Col":[1,2]},
+        }
+      break;
+
+      case "Productos":
+        this.DGM = {
+          Menu: "Datos",
+          Nombre: "Productos",
+          CamMod:[
+            {Tit:"Foto",Cmp:"Foto",Tip:"Imagen",Req:"Si",VD:"fpdp.png",Val:"",Est:"",Car:"pro"},
+            {Tit:"Nombre",Cmp:"Nombre",Tip:"Texto",Req:"Si",VD:"",Val:""},
+            {Tit:"Marca",Cmp:"Marca",Tip:"Texto",Req:"No",VD:"",Val:""},
+            {Tit:"Modelo",Cmp:"Modelo",Tip:"Texto",Req:"No",VD:"",Val:""},
+            {Tit:"Precio",Cmp:"Precio",Tip:"Moneda",Req:"Si",VD:"",Val:"",Blo:"No"},
+            {Tit:"Existencia",Cmp:"Existencia",Tip:"Entero",Req:"Si",VD:"",Val:"",Blo:"No"},
+            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"Activa",Val:"",Blo:"No",Opcs:[{Val:"Activa",Tex:"Activa",Dis:""},{Val:"Inactiva",Tex:"Inactiva",Dis:""}]}
+          ],
+          OpcFil:"Si",
+          OpcReg:"Si",
+          OpcAgr:"Si",
+          OpcMod:"Si",
+          OpcEli:"Si",
+          CamQry:"*",
+          Tabla:"ferreteriaspro",
+          Donde:"",
+          Ordena:"ORDER BY Nombre",
+          Carpeta:"pro",
+          TabFor:{"Fil":[1,2,3,4],"Col":[1,2]},
+        }
+      break;
+
       case "Categorías":
         this.DGM = {
           Menu: "Datos",
@@ -2099,7 +2218,7 @@ export class AdmComponent {
           OpcEli:"Si",
           CamQry:"*",
           Tabla:"categorias",
-          Donde:(this.servicios.UsuMat.Tipo=="Proveedor" ? "WHERE NRegUsu="+this.servicios.UsuMat.NRegistro : ""),
+          Donde:(this.servicios.UsuMat.Tipo=="Tecnico" ? "WHERE NRegUsu="+this.servicios.UsuMat.NRegistro : ""),
           Ordena:"ORDER BY Nombre",
           Carpeta:"cat",
           TabFor:{"Fil":[1,2,3,4],"Col":[1,2]},
@@ -2152,7 +2271,7 @@ export class AdmComponent {
         }
       break;
 
-      case "Parametros":
+      case "Parámetros":
         this.DGM = {
           Menu: "Datos",
           Nombre: "Parámetros",
@@ -2180,7 +2299,7 @@ export class AdmComponent {
           Menu: "Soporte",
           Nombre: "FAQ",
           CamMod:[
-            {Tit:"Usuario",Cmp:"Usuario",Tip:"Select",Req:"Si",VD:"",Val:"",Opcs:[{Val:"Admin",Tex:"Admin",Dis:""},{Val:"Proveedor",Tex:"Proveedor",Dis:""},{Val:"Cliente",Tex:"Cliente",Dis:""}]},
+            {Tit:"Usuario",Cmp:"Usuario",Tip:"Select",Req:"Si",VD:"",Val:"",Opcs:[{Val:"Admin",Tex:"Admin",Dis:""},{Val:"Tecnico",Tex:"Tecnico",Dis:""},{Val:"Cliente",Tex:"Cliente",Dis:""}]},
             {Tit:"Tema",Cmp:"Tema",Tip:"Texto",Req:"Si",VD:"",Val:""},
             {Tit:"Pregunta",Cmp:"Pregunta",Tip:"Texto",Req:"Si",VD:"",Val:"",Tam:"Gra"},
             {Tit:"Respuesta",Cmp:"Respuesta",Tip:"Texto",Req:"Si",VD:"",Val:"",Tam:"Gra"},
@@ -2210,9 +2329,9 @@ export class AdmComponent {
             {Tit:"Apellido",Cmp:"Apellido",Tip:"Texto",Req:"Si",VD:"",Val:""},
             {Tit:"Teléfono",Cmp:"Telefono",Tip:"Telefono",Req:"Si",VD:"",Val:""},
             {Tit:"Email",Cmp:"Email",Tip:"Email",Req:"Si",VD:"",Val:""},
-            {Tit:"Password",Cmp:"Password",Tip:"Texto",Req:"Si",VD:"",Val:""},
-            {Tit:"Tipo",Cmp:"Tipo",Tip:"Texto",Req:"Si",VD:"Admin",Val:"",Blo:"Si"},
-            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"",Val:"",Opcs:[{Val:"Activo",Tex:"Activo",Dis:""},{Val:"Bloqueado",Tex:"Bloqueado",Dis:""}]}
+            {Tit:"Password",Cmp:"Password",Tip:"Password",Req:"Si",VD:"",Val:""},
+            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"Activo",Val:"",Opcs:[{Val:"Activo",Tex:"Activo",Dis:""},{Val:"Bloqueado",Tex:"Bloqueado",Dis:""}]},
+            {Tit:"Tipo",Cmp:"Tipo",Tip:"Texto",Req:"Si",VD:"Admin",Val:"",Blo:"Si",Ocu:"Si"},
           ],
           OpcFil:"Si",
           OpcReg:"Si",
@@ -2238,9 +2357,9 @@ export class AdmComponent {
             {Tit:"Apellido",Cmp:"Apellido",Tip:"Texto",Req:"Si",VD:"",Val:""},
             {Tit:"Teléfono",Cmp:"Telefono",Tip:"Telefono",Req:"Si",VD:"",Val:""},
             {Tit:"Email",Cmp:"Email",Tip:"Email",Req:"Si",VD:"",Val:""},
-            {Tit:"Password",Cmp:"Password",Tip:"Texto",Req:"Si",VD:"",Val:""},
-            {Tit:"Tipo",Cmp:"Tipo",Tip:"Texto",Req:"Si",VD:"Soporte",Val:"",Blo:"Si"},
-            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"",Val:"",Opcs:[{Val:"Activo",Tex:"Activo",Dis:""},{Val:"Bloqueado",Tex:"Bloqueado",Dis:""}]}
+            {Tit:"Password",Cmp:"Password",Tip:"Password",Req:"Si",VD:"",Val:""},
+            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"Activo",Val:"",Opcs:[{Val:"Activo",Tex:"Activo",Dis:""},{Val:"Bloqueado",Tex:"Bloqueado",Dis:""}]},
+            {Tit:"Tipo",Cmp:"Tipo",Tip:"Texto",Req:"Si",VD:"Soporte",Val:"",Blo:"Si",Ocu:"Si"},
           ],
           OpcFil:"Si",
           OpcReg:"Si",
@@ -2257,32 +2376,21 @@ export class AdmComponent {
         }
       break;
 
-      case "Proveedores":
+      case "Técnicos":
         let FHA = new Date().toISOString().replace("T"," ").substring(0,19);
         console.log(FHA);
         this.DGM = {
           Menu: "Usuarios",
-          Nombre: "Proveedores",
+          Nombre: "Técnicos",
           CamMod:[
             {Tit:"Foto Perfil",Cmp:"FotPer",Tip:"Imagen",Req:"Si",VD:"fpdu.png",Val:"",Est:"",Car:"usu"},
             {Tit:"Nombre",Cmp:"Nombre",Tip:"Texto",Req:"Si",VD:"",Val:""},
-            // {Tit:"Apellido",Cmp:"Apellido",Tip:"Texto",Req:"No",VD:"",Val:""},
-            {Tit:"Imagen Publicitaria",Cmp:"Imagen",Tip:"Imagen",Req:"Si",VD:"fpdv.png",Val:"",Est:"",Car:"usu"},
-            {Tit:"Descuento General %",Cmp:"Descuento",Tip:"Entero",Req:"Si",VD:"",Val:""},
-            {Tit:"Pais",Cmp:"Pais",Tip:"Texto",Req:"Si",VD:"",Val:""},
+            {Tit:"Apellido",Cmp:"Apellido",Tip:"Texto",Req:"No",VD:"",Val:""},
             {Tit:"Teléfono",Cmp:"Telefono",Tip:"Telefono",Req:"Si",VD:"",Val:""},
-            {Tit:"WebSite",Cmp:"WebSite",Tip:"Texto",Req:"No",VD:"",Val:""},
-            {Tit:"Dirección",Cmp:"Domicilio",Tip:"Texto",Req:"Si",VD:"",Val:""},
-            {Tit:"Horario",Cmp:"Horario",Tip:"Texto",Req:"Si",VD:"",Val:""},
-            {Tit:"Categoría",Cmp:"NRegCat",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Qry:{Cmps:"NRegistro,Nombre",Tab:"categorias",Don:"WHERE Estatus=|Activa|",Ord:"ORDER BY Nombre",Res:[]}},
-            {Tit:"Edad Mínima",Cmp:"EdaMin",Tip:"Entero",Req:"Si",VD:"",Val:"",Blo:"No"},
-            {Tit:"Edad Máxima",Cmp:"EdaMax",Tip:"Entero",Req:"Si",VD:"",Val:"",Blo:"No"},
-            {Tit:"Coordenadas",Cmp:"UbiAct",Tip:"Texto",Req:"Si",VD:"",Val:""},
             {Tit:"Email",Cmp:"Email",Tip:"Email",Req:"Si",VD:"",Val:""},
-            {Tit:"Password",Cmp:"Password",Tip:"Texto",Req:"Si",VD:"MzIx",Val:"",Blo:"Si"},
-            {Tit:"Tipo",Cmp:"Tipo",Tip:"Texto",Req:"Si",VD:"Proveedor",Val:"",Blo:"Si"},
-            {Tit:"Registro",Cmp:"FecHorReg",Tip:"FechaHora",Req:"Si",VD:FHA,Val:"",Blo:"Si"},
-            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"",Val:"",Opcs:[{Val:"Activo",Tex:"Activo",Dis:""},{Val:"Bloqueado",Tex:"Bloqueado",Dis:""}]}
+            {Tit:"Password",Cmp:"Password",Tip:"Password",Req:"Si",VD:"",Val:""},
+            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"Activo",Val:"",Opcs:[{Val:"Activo",Tex:"Activo",Dis:""},{Val:"Bloqueado",Tex:"Bloqueado",Dis:""}]},
+            {Tit:"Tipo",Cmp:"Tipo",Tip:"Texto",Req:"Si",VD:"Tecnico",Val:"",Blo:"Si",Ocu:"Si"},
           ],
           OpcFil:"Si",
           OpcReg:"Si",
@@ -2292,7 +2400,7 @@ export class AdmComponent {
           OpcDet:"No",
           CamQry:"*",
           Tabla:"usuarios",
-          Donde:"WHERE Tipo = |Proveedor|",
+          Donde:"WHERE Tipo = |Tecnico|",
           Ordena:"ORDER BY Nombre",
           Carpeta:"usu",
           TabFor:{"Fil":[1,2,3,4,5,6],"Col":[1,2,3]},
@@ -2311,10 +2419,9 @@ export class AdmComponent {
             {Tit:"Apellido",Cmp:"Apellido",Tip:"Texto",Req:"Si",VD:"",Val:""},
             {Tit:"Teléfono",Cmp:"Telefono",Tip:"Telefono",Req:"Si",VD:"",Val:""},
             {Tit:"Email",Cmp:"Email",Tip:"Email",Req:"Si",VD:"",Val:""},
-            {Tit:"Password",Cmp:"Password",Tip:"Texto",Req:"Si",VD:"MzIx",Val:"",Blo:"Si"},
-            {Tit:"Proveedor",Cmp:"NRegVen",Tip:"SelectQry",Req:"Si",VD:this.servicios.UsuMat.Tipo=="Proveedor"?this.servicios.UsuMat.NRegistro:"",Val:"",Blo:this.servicios.UsuMat.Tipo=="Proveedor"?"Si":"No",Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Proveedor| AND Estatus=|Activo|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
-            {Tit:"Tipo",Cmp:"Tipo",Tip:"Texto",Req:"Si",VD:"Cliente",Val:"",Blo:"Si"},
-            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"",Val:"",Opcs:[{Val:"Activo",Tex:"Activo",Dis:""},{Val:"Bloqueado",Tex:"Bloqueado",Dis:""}]}
+            {Tit:"Password",Cmp:"Password",Tip:"Password",Req:"Si",VD:"Activo",Val:""},
+            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"Activo",Val:"",Opcs:[{Val:"Activo",Tex:"Activo",Dis:""},{Val:"Bloqueado",Tex:"Bloqueado",Dis:""}]},
+            {Tit:"Tipo",Cmp:"Tipo",Tip:"Texto",Req:"Si",VD:"Cliente",Val:"",Blo:"Si",Ocu:"Si"},
           ],
           OpcFil:"Si",
           OpcReg:"Si",
@@ -2324,7 +2431,7 @@ export class AdmComponent {
           OpcDet:"No",
           CamQry:"*",
           Tabla:"usuarios",
-          Donde:"WHERE Tipo = |Cliente|"+(this.servicios.UsuMat.Tipo=="Proveedor" ? " AND NRegVen="+this.servicios.UsuMat.NRegistro : ""),
+          Donde:"WHERE Tipo = |Cliente|",
           Ordena:"ORDER BY Nombre",
           Carpeta:"usu",
           TabFor:{"Fil":[1,2,3,4,5],"Col":[1,2,3]},
@@ -2336,6 +2443,45 @@ export class AdmComponent {
     this.CarLis();
   }
 
+
+  //////////////////////////////////Asignacion////////////////////////////////
+  CarDetAsi(Asi){
+    this.DetDat = Asi;
+    this.DetDat.NRegTec = "";
+    this.CarLisTec();
+  }
+
+  AsiTec(){
+    if (!this.servicios.ValCam("IBNRegTec","Técnico","Texto",this.DetDat.NRegTec,"Si")){return}
+
+    let NueEst = "Asignada";
+    let CyV = "NRegTec=|"+this.DetDat.NRegTec+"|,Estatus=|"+NueEst+"|,FecHorAsi=NOW()";
+    this.servicios.AccSobBDAA("UPDATE","No","","",CyV,"asistencias","WHERE NRegistro="+this.DetDat.NRegistro+"","","",false).then((dataRes)=>{
+      let Res: any = dataRes;
+      //console.log(Res);
+      this.CarLis();
+      this.servicios.EnvNot(this.DetDat.NRegCli,"Asistencia Asignada","Tu asistencia fue asignada","Asistencias",this.DetDat.NRegistro)
+      this.servicios.EnvNot(this.DetDat.NRegTec,"Asistencia Asignada","Tienes una nueva asistencia asignada","Asistencias",this.DetDat.NRegistro)
+
+      this.CloModAsi.nativeElement.click();
+      this.servicios.EnvMsgSim("La Asistencia fue asignada","Hecho")
+    }).catch((err)=>{console.log(err)});
+
+  }
+
+  CarLisTec(){
+    this.servicios.AccSobBDAA("SELECT","Si","*","","","usuarios","WHERE Tipo=|Tecnico| AND Estatus=|Activo|","","",false).then((dataRes)=>{
+      let Res: any = dataRes;
+      //console.log(Res);
+      this.DetDat.LisTec = Res.data;
+    }).catch((err)=>{console.log(err)});
+  }
+  //////////////////////////////////Asignacion////////////////////////////////
+
+
+
+
+
   Refrescar(){
     window.localStorage.setItem("buscar"+this.DGM.Nombre,"");
     this.DonBus = "";
@@ -2345,6 +2491,8 @@ export class AdmComponent {
   EjeFun(Acc,Dat){
     if (Acc == "Agregar"){
       for (var n = 0; n < this.DGM.CamMod.length; n++){
+        if (this.DGM.CamMod[n].Tip == "Password"){this.DGM.CamMod[n].VD = this.servicios.GenCodAN();}
+        if (this.DGM.CamMod[n].Cmp == "Codigo"){this.DGM.CamMod[n].VD = this.servicios.GenCodAN();}
         this.DGM.CamMod[n].Val = this.DGM.CamMod[n].VD;
       }
     }else if (Acc == "Buscar"){
@@ -2357,6 +2505,9 @@ export class AdmComponent {
         for (var n2 = 0; n2 < this.DGM.CamMod.length; n2++){
           if(Cam == this.DGM.CamMod[n2].Cmp){
             this.DGM.CamMod[n2].Val = Dat[Cam];
+            if (this.DGM.CamMod[n2].Tip=="Password"){
+              this.DGM.CamMod[n2].Val = atob(this.DGM.CamMod[n2].Val)
+            }
           }
         }
       }
@@ -2675,12 +2826,22 @@ export class AdmComponent {
         if (!this.servicios.ValCam("IB"+n,this.servicios.DGF.DGM.CamMod[n].Tit,this.servicios.DGF.DGM.CamMod[n].Tip,this.servicios.DGF.DGM.CamMod[n].Val,this.servicios.DGF.DGM.CamMod[n].Req)){return;}
         if (n == 0){
           CmpS = this.servicios.DGF.DGM.CamMod[n].Cmp;
-          ValS = "|"+this.servicios.DGF.DGM.CamMod[n].Val+"|";
-          CyVS = this.servicios.DGF.DGM.CamMod[n].Cmp+"="+"|"+this.servicios.DGF.DGM.CamMod[n].Val+"|";
+          if (this.servicios.DGF.DGM.CamMod[n].Tip == "Password"){
+            ValS = "|"+btoa(this.servicios.DGF.DGM.CamMod[n].Val)+"|";
+            CyVS = this.servicios.DGF.DGM.CamMod[n].Cmp+"="+"|"+btoa(this.servicios.DGF.DGM.CamMod[n].Val)+"|";
+          }else{
+            ValS = "|"+this.servicios.DGF.DGM.CamMod[n].Val+"|";
+            CyVS = this.servicios.DGF.DGM.CamMod[n].Cmp+"="+"|"+this.servicios.DGF.DGM.CamMod[n].Val+"|";
+          }
         }else{
           CmpS = CmpS+","+this.servicios.DGF.DGM.CamMod[n].Cmp;
-          ValS = ValS+",|"+this.servicios.DGF.DGM.CamMod[n].Val+"|";
-          CyVS = CyVS+","+this.servicios.DGF.DGM.CamMod[n].Cmp+"="+"|"+this.servicios.DGF.DGM.CamMod[n].Val+"|";
+          if (this.servicios.DGF.DGM.CamMod[n].Tip == "Password"){
+            ValS = ValS+",|"+btoa(this.servicios.DGF.DGM.CamMod[n].Val)+"|";
+            CyVS = CyVS+","+this.servicios.DGF.DGM.CamMod[n].Cmp+"="+"|"+btoa(this.servicios.DGF.DGM.CamMod[n].Val)+"|";
+          }else{
+            ValS = ValS+",|"+this.servicios.DGF.DGM.CamMod[n].Val+"|";
+            CyVS = CyVS+","+this.servicios.DGF.DGM.CamMod[n].Cmp+"="+"|"+this.servicios.DGF.DGM.CamMod[n].Val+"|";
+          }
         }
       }
     }

@@ -89,7 +89,7 @@ export class IniComponent {
 
   Login(){
     if(this.InpLogEma != "" && this.InpLogPas != "" || this.Token != ""){
-      this.servicios.AccSobBDAA("LOGINADM","Si","",this.InpLogEma+","+this.InpLogPas+","+this.Token,"","","","","",true).then((dataRes)=>{
+      this.servicios.AccSobBDAA("LOGINADM","Si","",this.InpLogEma+","+btoa(this.InpLogPas)+","+this.Token,"","","","","",true).then((dataRes)=>{
         let Res: any = dataRes;
         //console.log(Res);
         if (Res.data.length > 0){
@@ -110,7 +110,7 @@ export class IniComponent {
                   this.CerModLogReg.nativeElement.click();
                   this.router.navigate(["adm"]);
                 break;
-                case "Proveedor":
+                case "Tecnico":
                   this.MosPag("Inicio");
                   this.CerModLogReg.nativeElement.click();
                   this.router.navigate(["adm"]);
@@ -148,7 +148,7 @@ export class IniComponent {
     this.servicios.UsuReg.Apellido = this.InpLogApe;
     this.servicios.UsuReg.Email = this.InpLogEma;
     this.servicios.UsuReg.Pas = this.InpLogPas;
-    this.servicios.UsuReg.Tipo = "Proveedor";
+    this.servicios.UsuReg.Tipo = "Tecnico";
 
     let Campos = "Nombre,Apellido,Email,Password,FotPer,Tipo,FecHorReg,FecHorLog,FecHorIniMem,FecHorFinMem,Estatus";
     let Valores = "|"+this.servicios.UsuReg.Nombre+"|,|"+this.servicios.UsuReg.Apellido+"|,|"+this.servicios.UsuReg.Email+"|,|"+this.servicios.UsuReg.Pas+"|,|"+this.servicios.UsuReg.FotPer+"|,|"+this.servicios.UsuReg.Tipo+"|,NOW(),NOW(),NOW(),NOW(),|Activo|"
