@@ -1,0 +1,25 @@
+<div  style="padding:50px;">
+    <div style="margin:0 auto; margin-top:10%; min-width:300px; max-width:500px;">
+      <div class="text-center">
+        <img src="assets/img/logob.png" style="height: 75px; border-radius: 5px; margin:0 auto;">
+      </div>
+      <div class="card mb-4 box-shadow CarLog">
+        <div class="card-header">
+          <h5 class="m-0">Restablecer contraseña</h5>
+        </div>
+        <div class="card-body">
+          <div class="input-group InpGen mb-3">
+            <input type="password" class="form-control" placeholder="Nueva Contraseña"  [(ngModel)]="passw" id="Passw">
+            <i class="bi bi-asterisk text-muted fs-5 input-group-text"></i>
+          </div>
+          <div class="input-group InpGen mb-3">
+            <input type="password" class="form-control" placeholder="Repita Nueva Contraseña"  [(ngModel)]="passwre" id="Passwre">
+            <i class="bi bi-asterisk text-muted fs-5 input-group-text"></i>
+          </div>
+          <div class="text-center">
+            <button (click)="RecCon()" type="button" class="btn btn-secondary">Restablecer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

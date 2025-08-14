@@ -1,0 +1,142 @@
+/* You can add global styles to this file, and also import other style files */
+
+// html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@font-face{
+    font-family: Montserrat;
+    src: url(assets/font/Montserrat-Regular.ttf);
+}
+
+* {font-family: Montserrat !important;}
+
+$ColPri: #6256CA;
+$ColSeg: #FF8159;
+$ColSuc: #4CCD99;
+$ColDan: #dc3535;
+$ColWar: #FCCD2A;
+$ColInf: #29b7cf;
+$ColLig: #DAE5F2;
+$ColDar: #272727;
+$ColGri: #555555;
+$ColMed: #bbbbbb;
+$ColSua: #eeeeee;
+
+$ColPriRGB: rgb(5,140,181);
+$ColSegRGB: rgb(250,106,6);
+
+.mat-mdc-progress-bar{
+    --mdc-linear-progress-active-indicator-color: #f8f9fa !important;
+    --mdc-linear-progress-track-color: #FF8159 !important;
+    background-color: #FF8159 !important;
+}
+.mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+    stroke: #6256CA !important;
+}
+
+
+.btn-primary{
+  background-color: $ColPri !important;
+  border-color: $ColPri;
+}
+.btn-primary:hover{border-color: rgba($color: $ColPri, $alpha: .7);}
+
+.btn-secondary{
+  background-color: $ColSeg !important;
+  border-color: $ColSeg;
+}
+.btn-secondary:hover{border-color: rgba($color: $ColSeg, $alpha: .7);}
+
+.btn-outline-primary{
+  color: $ColPri !important;
+  border-color: $ColPri;
+}
+.btn-outline-primary:hover{background-color: $ColPri !important;color: $ColLig !important;border-color: $ColPri;}
+
+.btn-outline-secondary{
+  color: $ColSeg !important;
+  border-color: $ColSeg;
+}
+.btn-outline-secondary:hover{background-color: $ColSeg !important;color: $ColLig !important;border-color: $ColSeg;}
+
+.btn-clr-primary{
+  background-color: transparent !important;
+  border-color: transparent;
+  color: $ColPri;
+}
+.btn-clr-secondary{
+  background-color: transparent !important;
+  border-color: transparent;
+  color: $ColSeg;
+}
+
+.snackbar-normal {
+  --mdc-snackbar-container-color: #156a78;
+  --mdc-snackbar-supporting-text-color: #fff;
+  font-weight: bold;
+}
+.snackbar-importante {
+  --mdc-snackbar-container-color: #1ca2b9;
+  --mdc-snackbar-supporting-text-color: #fff;
+  font-weight: bold;
+}
+.snackbar-funciono {
+  --mdc-snackbar-container-color: #28a745;
+  --mdc-snackbar-supporting-text-color: #fff;
+  font-weight: bold;
+}
+.snackbar-error {
+  --mdc-snackbar-container-color: #dc3535;
+  --mdc-snackbar-supporting-text-color: #fff;
+  font-weight: bold;
+}
+.snackbar-advertencia {
+  --mdc-snackbar-container-color: #dc9935;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+.cdk-overlay-container {
+  z-index: 99999999999999;
+}
+
+.nav-item.dropdown .dropdown-item:active {
+  background-color: $ColSeg;
+}
+
+.InpGen{
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.InpBusDonA {
+  z-index: 9999999999999999 !important;
+}
+.pac-container {
+  z-index: 9999999999999999 !important;
+}
+
+
+
+/*//////////////////////////////SCROOL BAR//////////////////////////////////////*/
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+/*//////////////////////////////////////////////////////////////////////////////*/

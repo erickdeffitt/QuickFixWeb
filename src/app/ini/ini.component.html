@@ -1,0 +1,687 @@
+<!-- Barra de navegacion Top -->
+<nav class="navbar fixed-top navbar-expand-md pt-4 bg-white">
+  <div class="container-fluid">
+
+    <a (click)="MosPag('Inicio')" role="button" class="navbar-brand navbar-left ms-5"><img src="assets/img/logotext.png" style="height: 64px; border-radius: 5px; margin-right: 10px;"></a>
+
+    <button class="navbar-toggler navbar-right" type="button" data-bs-toggle="collapse" data-bs-target="#topMen" aria-controls="topMen" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="topMen">
+      <ul class="navbar-nav ms-auto me-5 mb-2 mb-md-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link fw-bolder fs-6 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Envíos
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item fw-bold ColGri" role="button" (click)="MosPag('Cotizador')" [ngClass]="PagAct==='Cotizador' ? 'active' : 'inactive'"><i class="bi bi-calculator"></i> Cotizador</a>
+            </li>
+            <li>
+              <a class="dropdown-item fw-bold ColGri" role="button" (click)="MosPag('Generador')" [ngClass]="PagAct==='Generador' ? 'active' : 'inactive'"><i class="bi bi-truck"></i> Generador</a>
+            </li>
+            <li>
+              <a class="dropdown-item fw-bold ColGri" role="button" (click)="MosPag('Resumen')" [ngClass]="PagAct==='Resumen' ? 'active' : 'inactive'"><i class="bi bi-columns-gap"></i> Resumen</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown ms-lg-4">
+          <a class="nav-link fw-bolder fs-6 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Rastreo
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item fw-bold ColGri" role="button" (click)="MosPag('Seguimiento')" [ngClass]="PagAct==='Seguimiento' ? 'active' : 'inactive'"><i class="bi bi-binoculars"></i> Seguimiento</a>
+            </li>
+            <li>
+              <a class="dropdown-item fw-bold ColGri" role="button" (click)="MosPag('Notificaciones')" [ngClass]="PagAct==='Notificaciones' ? 'active' : 'inactive'"><i class="bi bi-bell"></i> Notificaciones</a>
+            </li>
+            <li>
+              <a class="dropdown-item fw-bold ColGri" role="button" (click)="MosPag('Mapas')" [ngClass]="PagAct==='Mapas' ? 'active' : 'inactive'"><i class="bi bi-geo-alt"></i> Mapas</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item ms-lg-4">
+          <a class="nav-link fw-bolder fs-6" role="button" (click)="MosPag('Integraciones')" [ngClass]="PagAct==='Integraciones' ? 'active' : 'inactive'">Integraciones</a>
+        </li>
+        <li class="btn btn-primary ms-lg-4" data-bs-toggle="modal" data-bs-target="#ModLogReg" (click)="FunLogReg='Log'">
+          <a class="fw-bolder text-white text-decoration-none" role="button">Ingresar</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ////////////// PAGINA INICIO ////////////// -->
+<section class="SecIniTop" *ngIf="PagAct === 'Inicio'">
+  <div class="DivFlo">
+    <div class="row">
+      <div class="col">
+        <h1 class="fw-bolder">Todos tus envíos en la mejor App</h1>
+        <p class="fw-bold">Integra tu tienda en línea para gestionar y monitorear todos tus envíos desde una única plataforma. Además, mantén informados a tus clientes sobre el estado de sus paquetes hasta que lleguen a su destino.</p>
+        <button class="btn btn-secondary rounded-pill w-100" style="margin-top:20px" data-bs-toggle="modal" data-bs-target="#ModLogReg" (click)="FunLogReg='Log'">Regístrate fácilmente</button>
+      </div>
+      <div class="col text-center ColIma">
+        <div class="GloSup shadow-sm">
+          <img src="assets/img/camion.png" style="height: 65px; margin-top:15%;" alt="">
+          <p class="mt-3 fw-bold">
+            <span class="text-secondary">Nuevo envío a </span>
+            <span class="text-dark fw-bolder">Ciudad </span>
+            <span class="ColPri">Con la mejor opción </span>
+          </p>
+        </div>
+        <div class="GloInf shadow-sm">
+          <img src="assets/img/reccaj.png" style="height: 100px; margin-top:10%;" alt="">
+          <p class="mt-2 fw-bold">
+            <span class="text-secondary">La orden</span><br>
+            <span class="text-dark fw-bolder">#12345 </span>
+            <span class="ColSuc">fue entregada </span>
+          </p>
+        </div>
+        <img src="assets/img/perdel.png" style="width: 400px; height: 600px; border-radius: 30px; object-fit: cover;">
+      </div>
+    </div>
+  </div>
+
+  <swiper-container class="SwiConTop" autoplay="true" autoplay-delay="3000" loop="true" speed="3000" effect="fade">
+    <swiper-slide>
+      <div style="height: 500px; width: 100%; background: linear-gradient(45deg, rgba(127,223,255,1) 0%, rgba(255,179,127,1) 100%);"></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div style="height: 500px; width: 100%; background: linear-gradient(135deg, rgba(127,223,255,1) 0%, rgba(255,179,127,1) 100%);"></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div style="height: 500px; width: 100%; background: linear-gradient(225deg, rgba(127,223,255,1) 0%, rgba(255,179,127,1) 100%);"></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div style="height: 500px; width: 100%; background: linear-gradient(315deg, rgba(127,223,255,1) 0%, rgba(255,179,127,1) 100%);"></div>
+    </swiper-slide>
+  </swiper-container>
+</section>
+<section class="SecIniCon" *ngIf="PagAct === 'Inicio'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <p class="fw-bold">Contamos con los mejores aliados logísticos.</p>
+        <swiper-container autoplay="true" autoplay-delay="2000" loop="true">
+          <swiper-slide>
+            <img src="assets/img/loge1.png" style="height: 100px;" alt="">
+          </swiper-slide>
+          <swiper-slide>
+            <img src="assets/img/loge2.png" style="height: 100px;" alt="">
+          </swiper-slide>
+          <swiper-slide>
+            <img src="assets/img/loge3.png" style="height: 100px;" alt="">
+          </swiper-slide>
+        </swiper-container>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecIniCre bg-light" *ngIf="PagAct === 'Inicio'">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <span class="fw-bolder p-3 rounded-pill BacPri">CREDIBILIDAD</span>
+        <h3 class="mt-4">¡Imagina una brújula que siempre te lleva por el mejor camino, así de efectivos somos!</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col d-flex justify-content-center">
+        <div class="card m-1 shadow " style="width: 18rem;">
+          <img src="assets/img/redes.png" class="card-img-top" alt="">
+          <div class="card-body">
+            <p class="card-title fw-bolder fs-5">Redes</p>
+            <p class="card-text">Publicamos actualizaciones sobre nuestros servicios, compartimos consejos útiles y respondemos rápidamente a cualquier consulta o inquietud, estamos a su orden.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <div class="card m-1 shadow " style="width: 18rem;">
+          <img src="assets/img/tecnologia.png" class="card-img-top" alt="">
+          <div class="card-body">
+            <p class="card-title fw-bolder fs-5">Tecnología</p>
+            <p class="card-text">Utilizamos sistemas de rastreo avanzados y herramientas de inteligencia artificial para garantizar que cada paquete llegue a su destino de manera segura y puntual.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <div class="card m-1 shadow " style="width: 18rem;">
+          <img src="assets/img/talento.png" class="card-img-top" alt="">
+          <div class="card-body">
+            <p class="card-title fw-bolder fs-5">Talento</p>
+            <p class="card-text">Contamos con un equipo de profesionales altamente capacitados y comprometidos con la excelencia. Dedicación y pasión para ofrecer un servicio de primera calidad.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecIniEnv" *ngIf="PagAct === 'Inicio'">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <img class="mb-3" src="assets/img/gercon.png" style="width: auto; height: 400px; border-radius: 30px; object-fit: cover;">
+      </div>
+      <div class="col">
+        <span class="fw-bolder p-3 rounded-pill BacPri">ENVÍOS</span>
+        <h3 class="mt-4">Administra profesionalmente tu empresa</h3>
+        <p>Usar una app de gestión de envíos presenta una serie de ventajas significativas. En primer lugar, simplifica y automatiza el proceso de envío, desde la creación de etiquetas hasta el seguimiento de paquetes en tiempo real. Esto no solo ahorra tiempo, sino que también reduce la posibilidad de errores humanos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecIniCre bg-light" *ngIf="PagAct === 'Inicio'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <span class="fw-bolder p-3 rounded-pill BacPri">RASTREO</span>
+        <h3 class="mt-4">El rastreo vía GPS ofrece múltiples beneficios</h3>
+        <p>Con la capacidad de monitorear la ubicación en tiempo real, las empresas pueden optimizar rutas, reducir costos operativos y mejorar la puntualidad de las entregas. Además, el GPS proporciona datos precisos y actualizados, lo que permite a los clientes seguir sus envíos con confianza, mejorando la satisfacción del cliente.</p>
+      </div>
+      <div class="col text-center">
+        <img class="mb-3" src="assets/img/rasgps.png" style="width: auto; height: 400px; border-radius: 30px; object-fit: cover;">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="SecDoc" *ngIf="PagAct === 'Cotizador'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Cotizador</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'Generador'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Generador</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'Resumen'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Resumen</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'Seguimiento'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Seguimiento</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'Notificaciones'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Notificaciones</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'Mapas'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Mapas</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'Integraciones'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Integraciones</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'Ayuda'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Ayuda</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'Terminos'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Términos de uso</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'Politicas'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Políticas de Privacidad</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'Cookies'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Políticas de Cookies</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'Eliminar'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Eliminar mis datos</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'HomPre'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Precios</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'HomNos'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Nosotros</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'HomCon'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Condiciones</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="SecDoc" *ngIf="PagAct === 'PreFre'">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Preguntas frecuentes</h1>
+        <p style="text-align: justify;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, minus corporis. Exercitationem eos vitae non nihil, nemo veritatis modi assumenda vel! Ullam in aliquid architecto perspiciatis aspernatur adipisci explicabo tempore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ////////////// MODAL LOGIN REGISTRO /////////////////// -->
+<div class="modal fade bd-example-modal-lg" id="ModLogReg" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="mod-tit-ext"><span *ngIf="FunLogReg === 'Log'">Accede a tu cuenta</span><span *ngIf="FunLogReg === 'Reg'">Crea tu cuenta</span> <span data-bs-dismiss="modal" #CerModLogReg></span></div>
+      <div class="container-fluid">
+        <div class="row d-flex ModLogRegRow">
+          <div class="col">
+
+            <div *ngIf="FunLogReg === 'Reg'" class="text-center">
+              <div *ngIf="servicios.UsuReg.FotPer && CargandoReg == ''" (click)="CarFotReg()" style="margin:0 auto; background: url({{servicios.ApiUrl}}img/usu/{{servicios.UsuReg.FotPer}}) center center / cover no-repeat; height:150px; width:150px; border-radius:50%;"></div>
+              <mat-spinner *ngIf="CargandoReg == 'Si'" style="margin: 0 auto;"></mat-spinner>
+              <input style="width:10px; opacity:0;" type="file" lang="es" id="InpFotReg" #InpFotReg accept="image/png,image/jpeg" (input)="ActValReg()">
+            </div>
+
+            <div *ngIf="FunLogReg === 'Reg'" class="input-group InpGen mb-3">
+              <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="InpLogNom" id="InpLogNom">
+              <i class="bi bi-fonts text-muted fs-3 input-group-text"></i>
+            </div>
+
+            <div *ngIf="FunLogReg === 'Reg'" class="input-group InpGen mb-3">
+              <input type="text" class="form-control" placeholder="Apellido" [(ngModel)]="InpLogApe" id="InpLogApe">
+              <i class="bi bi-fonts text-muted fs-3 input-group-text"></i>
+            </div>
+
+            <div class="input-group InpGen mb-3">
+              <input type="email" class="form-control" placeholder="Email" [(ngModel)]="InpLogEma" id="InpLogEma" autocomplete="off">
+              <i class="bi bi-envelope text-muted fs-3 input-group-text"></i>
+            </div>
+
+            <div class="input-group InpGen mb-1">
+              <input type="password" class="form-control" placeholder="Contraseña" [(ngModel)]="InpLogPas" id="InpLogPas" #InpPas>
+              <i *ngIf="!MosCon" (click)="MosOcuCon(InpPas)" class="bi bi-eye text-muted fs-3 input-group-text" role="button"></i>
+              <i *ngIf="MosCon" (click)="MosOcuCon(InpPas)"  class="bi bi-eye-slash text-muted fs-3 input-group-text" role="button"></i>
+            </div>
+
+            <div *ngIf="FunLogReg === 'Log'" class="text-end">
+              <p *ngIf="!RecCon" role="button" (click)="OlvCon()">¿Olvido su Contraseña?</p>
+              <mat-spinner *ngIf="RecCon" [diameter]="20" style="margin-left: 95%;" ></mat-spinner>
+            </div>
+
+            <div class="row mt-3 mb-5">
+              <div class="col text-center d-grid gap-2">
+                <button *ngIf="FunLogReg === 'Log'" type="button" class="btn btn-secondary" (click)="Login()">Acceder</button>
+                <button *ngIf="FunLogReg === 'Reg'" type="button" class="btn btn-secondary" (click)="RegCue()">Crear cuenta</button>
+                <button *ngIf="FunLogReg === 'Reg'" type="button" class="btn btn-outline-primary" (click)="IniSes()">Acceder</button>
+              </div>
+            </div>
+
+            <div class="row text-center mb-3">
+              <div class="col"><hr></div>
+              <div class="col-5 p-1">Registrate mediante</div>
+              <div class="col"><hr></div>
+            </div>
+
+            <div class="row text-center">
+              <div class="col m-2 p-1 btn btn-light" (click)="RegUsu('Goo')">
+                <img src="assets/img/IcoGoo.png" style="height: 50px;">
+                <p class="m-0">Google</p>
+              </div>
+              <div class="col m-2 p-1 btn btn-light" (click)="RegUsu('App')">
+                <img src="assets/img/IcoApp.png" style="height: 50px;">
+                <p class="m-0">Apple</p>
+              </div>
+              <div class="col m-2 p-1 btn btn-light" (click)="RegUsu('Fac')">
+                <img src="assets/img/IcoFac.png" style="height: 50px;">
+                <p class="m-0">Facebook</p>
+              </div>
+              <div class="col m-2 p-1 btn btn-light" (click)="RegUsu('Ema')">
+                <img src="assets/img/IcoEma.png" style="height: 50px;">
+                <p class="m-0">Email</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ////////////// MODAL LOGIN REGISTRO /////////////////// -->
+
+<!-- ////////////// MODAL CONTACTO /////////////////// -->
+<div class="modal fade bd-example-modal-lg" id="ModCon" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="mod-tit-ext">Contactanos<span data-bs-dismiss="modal" #CerModCon></span></div>
+      <div class="container-fluid">
+        <div class="row d-flex ModLogRegRow">
+          <div class="col">
+
+            <div class="input-group InpGen mb-3">
+              <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="InpLogNom" id="InpLogNom">
+              <i class="bi bi-fonts text-muted fs-3 input-group-text"></i>
+            </div>
+
+            <div class="input-group InpGen mb-3">
+              <input type="text" class="form-control" placeholder="Apellido" [(ngModel)]="InpLogApe" id="InpLogApe">
+              <i class="bi bi-fonts text-muted fs-3 input-group-text"></i>
+            </div>
+
+            <div class="input-group InpGen mb-3">
+              <input type="email" class="form-control" placeholder="Email" [(ngModel)]="InpLogEma" id="InpLogEma">
+              <i class="bi bi-envelope text-muted fs-3 input-group-text"></i>
+            </div>
+
+            <div class="input-group InpGen mb-3">
+              <textarea class="form-control" placeholder="Mensaje" [(ngModel)]="InpLogMen" id="InpLogMen" rows="3"></textarea>
+              <i class="bi bi-fonts text-muted fs-3 input-group-text"></i>
+            </div>
+
+            <div class="row mt-3 mb-5">
+              <div class="col text-center d-grid gap-2">
+                <button type="button" class="btn btn-secondary" (click)="EnvCon()">Enviar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ////////////// MODAL CONTACTO /////////////////// -->
+
+<!-- ////////////// MODAL CONTRASEÑA /////////////////// -->
+<div class="modal fade bd-example-modal-lg" id="ModPas" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="mod-tit-ext">Cambiar contraseña<span data-bs-dismiss="modal" #CerModPas></span></div>
+      <div class="container-fluid">
+        <div class="row d-flex ModLogRegRow">
+          <div class="col">
+
+            <div class="input-group InpGen mb-1">
+              <input type="password" class="form-control" placeholder="Nueva Contraseña" [(ngModel)]="InpLogPas" id="InpPasB" #InpPasB>
+              <i *ngIf="!MosCon" (click)="MosOcuCon(InpPasB); MosOcuCon(InpPasBCon);" class="bi bi-eye text-muted fs-3 input-group-text" role="button"></i>
+              <i *ngIf="MosCon" (click)="MosOcuCon(InpPasB); MosOcuCon(InpPasBCon);"  class="bi bi-eye-slash text-muted fs-3 input-group-text" role="button"></i>
+            </div>
+
+            <div class="input-group InpGen mb-1">
+              <input type="password" class="form-control" placeholder="Confirmar Nueva Contraseña" [(ngModel)]="InpLogPasCon" id="InpPasBCon" #InpPasBCon>
+              <i *ngIf="!MosCon" (click)="MosOcuCon(InpPasB); MosOcuCon(InpPasBCon);" class="bi bi-eye text-muted fs-3 input-group-text" role="button"></i>
+              <i *ngIf="MosCon" (click)="MosOcuCon(InpPasB); MosOcuCon(InpPasBCon);"  class="bi bi-eye-slash text-muted fs-3 input-group-text" role="button"></i>
+            </div>
+
+            <div class="row mt-3 mb-5">
+              <div class="col text-center d-grid gap-2">
+                <button type="button" class="btn btn-warning" (click)="ConCon()">Confirmar cambio de contraseña</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ////////////// MODAL CONTRASEÑA /////////////////// -->
+
+
+
+<section  class="SecVinTel">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="AreTex">
+          <h1>Añade QuickFix+ a tu móvil</h1>
+          <div class="AreBlo d-flex justify-content-center">
+            <div class="BloIco">
+              <i class="bi bi-speedometer"></i>
+              <p>Más rápido</p>
+            </div>
+            <div class="BloIco">
+              <i class="bi bi-emoji-smile"></i>
+              <p>Más fácil y cómodo</p>
+            </div>
+            <div class="BloIco">
+              <i class="bi bi-phone"></i>
+              <p>Información a mano</p>
+            </div>
+          </div>
+          <div class="AreBlo d-flex justify-content-center">
+            <img class="ImaTie" src="assets/img/google.png" alt="" role="button">
+            <img class="ImaTie" src="assets/img/app-store.png" alt="" role="button">
+          </div>
+          
+        </div>
+      </div>
+
+      <div class="col-4">
+        <img class="ImaMov" src="assets/img/movil.png" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="SecFooWeb">
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
+        <p>Legal</p>
+        <li role="button" (click)="MosPag('Terminos')">Términos de uso</li>
+        <li role="button" (click)="MosPag('Politicas')">Políticas de Privacidad</li>
+        <li role="button" (click)="MosPag('Cookies')">Políticas de Cookies</li>
+      </div>
+      <div class="col-3">
+        <p>Información</p>
+        <li role="button" (click)="MosPag('HomNos')">Sobre Nosotros</li>
+        <li role="button" (click)="MosPag('HomCon')">Condiciones</li>
+      </div>
+      <div class="col-3">
+        <p>Soporte</p>
+        <li role="button" data-bs-target="#ModCon" data-bs-toggle="modal">Contacto</li>
+        <li role="button" (click)="MosPag('PreFre')">Preguntas Frecuentes</li>
+        <li role="button" data-bs-toggle="modal" data-bs-target="#ModLogReg" (click)="FunLogReg='Reg'">Da de alta tu local</li>
+      </div>
+      <div class="col-3">
+        <p>Súscribete</p>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Tu Email" aria-label="Tu Email" aria-describedby="button-addon2">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <hr>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-4 text-start">
+        <img src="assets/img/logob.png" style="height: 75px;">
+      </div>
+      <div class="col-4 text-center">
+        <p class="m-0">{{servicios.ObtAno()}} &#64; Derechos reservados</p>
+      </div>
+      <div class="col-4 text-end">
+        <p class="ParIcoSoc m-0">
+          <i role="button" class="bi bi-telephone-fill"></i>
+          <i role="button" class="bi bi-facebook"></i>
+          <i role="button" class="bi bi-youtube"></i>
+          <i role="button" class="bi bi-instagram"></i>
+          <i role="button" class="bi bi-telegram"></i>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="SecFooMov">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col">
+        <p>Legal</p>
+        <li>Términos de uso</li>
+        <li>Políticas de Privacidad</li>
+        <li>Políticas de Cookies</li>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <p>Información</p>
+        <li>Precios</li>
+        <li>Sobre Nosotros</li>
+        <li>Condiciones</li>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <p>Soporte</p>
+        <li>Contacto</li>
+        <li>Preguntas Frecuentes</li>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>Súscribete</p>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Tu Email" aria-label="Tu Email" aria-describedby="button-addon2">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-center">
+        <img src="assets/img/logob.png" style="height: 75px;">
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col text-center">
+        <p>{{servicios.ObtAno()}} &#64; Derechos reservados</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-center">
+        <p class="ParIcoSoc">
+          <i role="button" class="bi bi-telephone-fill"></i>
+          <i role="button" class="bi bi-facebook"></i>
+          <i role="button" class="bi bi-youtube"></i>
+          <i role="button" class="bi bi-instagram"></i>
+          <i role="button" class="bi bi-telegram"></i>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

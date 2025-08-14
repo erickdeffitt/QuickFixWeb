@@ -1,0 +1,267 @@
+@import "../../styles.scss";
+
+.ColPri{color: $ColPri;}
+.ColSeg{color: $ColSeg;}
+.ColSuc{color: $ColSuc;}
+.ColWar{color: $ColWar;}
+.ColGri{color: $ColGri;}
+
+.BacPri{background: rgba($ColPriRGB,1); color:white;}
+.BacSeg{background: rgba($ColSegRGB,1); color:white;}
+
+
+.active {color: $ColSeg !important; background: none !important;}
+.active:active {color: $ColSeg !important; background: none !important;}
+.inactive {color: $ColGri !important; background: none !important;}
+.inactive:active {color: $ColSeg !important; background: $ColSua !important;}
+
+#map {
+    width: 100%;
+    height: 100%;
+    border: 0px solid blue;
+}
+
+.mod-tit{
+    padding: 10px;
+    font-size: large;
+    font-weight: bolder;
+}
+
+.mod-tit-ext{
+    margin: 40px 0 30px 0;
+    padding: 10px;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bolder;
+}
+
+.SecIniTop{
+    position: relative;
+    margin-top: 120px;
+
+    .DivFlo{
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        height: 120%;
+        width: 80%;
+        z-index: 9;
+
+        // border: 1px solid red;
+
+        .ColIma{
+            position: relative;
+        }
+        .GloSup{
+            position: absolute;
+            top: 10%;
+            left: 0px;
+            height: 200px;
+            width: 150px;
+            background: $ColLig;
+            border-radius: 30px;
+        }
+        .GloInf{
+            position: absolute;
+            bottom: 10%;
+            right: 0px;
+            height: 200px;
+            width: 150px;
+            background: $ColLig;
+            border-radius: 30px;
+        }
+    }
+}
+
+.SecIniCon{
+    padding-top: 2%;
+}
+
+.SecIniCre{
+    padding: 5% 0;
+    // margin: 5% 0;
+}
+
+.SecIniEnv{
+    padding: 5% 0;
+    // margin: 5% 0;
+}
+
+.SecDoc{
+    margin: 200px 0;
+}
+
+@media screen and (min-width:600px) { // WEB
+    .SecVinTel{
+        background: $ColPri;
+        // margin-top: 100px;
+
+        .AreTex{
+            margin: 10% 10% 3% 10%;
+
+            h1{
+                color: white;
+                font-size: 30px;
+                font-weight: bold;
+                text-align: center;
+
+                .SpaFac{
+                    color: $ColSeg;
+                }
+            }
+        }
+
+        .AreBlo{
+            .BloIco{
+                margin: 20px;
+                padding-top: 30px;
+                text-align: center;
+                background: rgba($color: white, $alpha: 0.2);
+                height: 150px;
+                width: 120px;
+                border-radius: 20px;
+
+                .bi{
+                    font-size: 32px;
+                    color: white;
+                    padding: 7px;
+                    border-radius: 10px;
+                    background: $ColPri;
+                }
+
+                p{
+                    margin: 20px 10px;
+                    color: white;
+                    font-weight: bolder;
+                }
+            }
+
+            .ImaTie{
+                margin: 10px;
+                height: 50px;
+            }
+        }
+
+        .ImaMov{
+            // margin-top: -100px;
+            height: 400px;
+        }
+    }
+
+    .SecFooMov{display: none;}
+    .SecFooWeb{
+        padding: 5%;
+        background: $ColLig;
+        p{
+            font-weight: bolder;
+        }
+
+        li{
+            list-style: none;
+        }
+
+        .ParIcoSoc{
+            .bi{
+                margin: 10px;
+                font-size: 20px;
+                color: white;
+                padding: 7px;
+                border-radius: 50%;
+                background: $ColSeg;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:600px) { // MOVIL
+    .SecIniTop{
+        padding-bottom: 15%;
+
+        .DivFlo{
+            top: 5%;
+            .ColIma{
+                display: none;
+            }
+        }
+    }
+
+    .SecVinTel{
+        background: $ColPri;
+        // margin-top: 100px;
+
+        .AreTex{
+            margin: 10% 1%;
+
+            h1{
+                color: white;
+                font-size: 30px;
+                font-weight: bold;
+                text-align: center;
+
+                .SpaFac{
+                    color: $ColSeg;
+                }
+            }
+        }
+
+        .AreBlo{
+            .BloIco{
+                margin: 10px;
+                padding-top: 30px;
+                text-align: center;
+                background: rgba($color: white, $alpha: 0.2);
+                height: 150px;
+                width: 200px;
+                border-radius: 20px;
+
+                .bi{
+                    font-size: 32px;
+                    color: white;
+                    padding: 7px;
+                    border-radius: 10px;
+                    background: $ColPri;
+                }
+
+                p{
+                    margin: 20px 5px;
+                    color: white;
+                    font-weight: bolder;
+                }
+            }
+
+            .ImaTie{
+                margin: 10px;
+                height: 50px;
+            }
+        }
+
+        .ImaMov{
+            // margin-top: -100px;
+            height: 400px;
+        }
+    }
+
+    .SecFooWeb{display: none;}
+    .SecFooMov{
+        padding: 5%;
+        background: $ColLig;
+        p{
+            font-weight: bolder;
+        }
+
+        li{
+            list-style: none;
+        }
+
+        .ParIcoSoc{
+            .bi{
+                margin: 10px;
+                font-size: 20px;
+                color: white;
+                padding: 7px;
+                border-radius: 50%;
+                background: $ColSeg;
+            }
+        }
+    }
+}

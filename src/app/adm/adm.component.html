@@ -1,0 +1,1441 @@
+<!-- Barra de navegacion Top -->
+<nav class="navbar fixed-top navbar-expand-md navbar-dark BGT">
+    <div class="container-fluid">
+  
+      <a href="#" class="navbar-brand navbar-left"><img src="assets/img/logotext.png" style="height: 64px; border-radius: 5px; margin-right: 10px;"></a>
+  
+      <button *ngIf="servicios.UsuMat.NRegistro" class="navbar-toggler navbar-right" type="button" data-bs-toggle="collapse" data-bs-target="#topMen" aria-controls="topMen" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div *ngIf="servicios.UsuMat.NRegistro" class="collapse navbar-collapse navbar-right" id="topMen"></div>
+      <!--
+      <div *ngIf="servicios.UsuMat.NRegistro && servicios.UsuMat.Tipo != 'Admin'" class="navbar-brand navbar-right position-relative">
+        <div class="me-3 bg-light p-2 rounded-5" matTooltip="Billetera" matTooltipPosition="below">
+          <i class="bi bi-wallet-fill me-2 text-black-50" role="button" (click)="MosPag('Movimientos')"></i>
+          <span class="fw-bolder fs-5 text-black-50"><span class="text-dark">{{servicios.Pais.SimMon}}</span> {{servicios.NumFor(servicios.UsuMat.Saldo)}}</span>
+          <i class="bi bi-plus-circle ms-2 text-info" data-bs-toggle="modal" data-bs-target="#ModAbo" role="button" #IcoAboSal></i>
+        </div>
+      </div>
+      -->
+
+      <div *ngIf="servicios.UsuMat.NRegistro" class="navbar-brand navbar-right position-relative" (click)="MosPag('Notificaciones')">
+        <span *ngIf="servicios.DatNot.Todas.length > 0" class="position-absolute top-0 end-0 translate-middle p-2 bg-danger rounded-circle"></span>
+        <i class="bi bi-bell fs-3 me-3" role="button"></i>
+      </div>
+      <div *ngIf="servicios.UsuMat.NRegistro" class="navbar-brand navbar-right" (click)="MosPag('Perfil')" role="button">
+        <div *ngIf="!servicios.UsuMat.FotPer.includes('https://')" style="float:left; margin-right: 10px; height: 64px; width: 64px; border-radius: 50%; background: url('{{servicios.ApiUrl}}img/usu/{{servicios.UsuMat.FotPer}}') center center / cover no-repeat;"></div>
+        <div *ngIf="servicios.UsuMat.FotPer.includes('https://')" style="float:left; margin-right: 10px; height: 64px; width: 64px; border-radius: 50%; background: url('{{servicios.AjuFPRS(servicios.UsuMat.FotPer)}}') center center / cover no-repeat;"></div>
+        <p style="float:right; margin: 0px;">
+          {{servicios.UsuMat.Nombre}}
+          <br>
+          <span class="fs-6 text-warning">{{servicios.UsuMat.Tipo}}</span>
+        </p>
+      </div>
+  
+    </div>
+</nav>
+<!-- Espacio top -->
+<section style="height: 92px;"></section>
+<mat-progress-bar *ngIf="!servicios.Cargando" mode="determinate" value="100"></mat-progress-bar>
+<mat-progress-bar *ngIf="servicios.Cargando" mode="indeterminate"></mat-progress-bar>
+
+<section class="sec-con">
+  <div class="container-fluid h-100">
+    <div class="row h-100">
+      <div *ngIf="servicios.UsuMat.NRegistro" class="col-2 pt-3 bg-light">
+        <mat-accordion class="example-headers-align">
+          <mat-expansion-panel hideToggle (click)="MenAct='Inicio'" (click)="MosPag('Inicio')" [expanded]="MenAct==='Inicio'" [ngClass]="MenAct==='Inicio' ? 'MenAct' : ''">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="fw-bolder fs-6 text-secondary"><i class="bi bi-house-fill IcoMen"></i><span>Inicio</span></mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <p (click)="MosPag('Inicio')" [ngClass]="PagAct==='Inicio' ? 'IteAct' : ''">· Dashboard</p>
+          </mat-expansion-panel>
+        
+          <mat-expansion-panel hideToggle (click)="MenAct='Servicios'" [expanded]="MenAct==='Servicios'" [ngClass]="MenAct==='Servicios' ? 'MenAct' : ''">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="fw-bolder fs-6 text-secondary"><i class="bi bi-box-fill IcoMen"></i><span>Servicios</span></mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <p (click)="MosPag('Servicios')" [ngClass]="PagAct==='Servicios' ? 'IteAct' : ''">· Servicios</p>
+            <p (click)="MosPag('Eventos')" [ngClass]="PagAct==='Eventos' ? 'IteAct' : ''">· Eventos</p>
+            <p (click)="MosPag('Cupones')" [ngClass]="PagAct==='Cupones' ? 'IteAct' : ''">· Cupones</p>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Noticias')" [ngClass]="PagAct==='Noticias' ? 'IteAct' : ''">· Noticias</p>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Publicidad')" [ngClass]="PagAct==='Publicidad' ? 'IteAct' : ''">· Publicidad</p>
+            <p (click)="MosPag('Notificaciones')" [ngClass]="PagAct==='Notificaciones' ? 'IteAct' : ''">· Notificaciones</p>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Mensajes')" [ngClass]="PagAct==='Mensajes' ? 'IteAct' : ''">· Mensajes</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel *ngIf="servicios.UsuMat.Tipo == 'Admin'" hideToggle (click)="MenAct='Ozza'" [expanded]="MenAct==='Ozza'" [ngClass]="MenAct==='Ozza' ? 'MenAct' : ''">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="fw-bolder fs-6 text-secondary"><i class="bi bi-cpu-fill IcoMen"></i><span>Ozza</span></mat-panel-title>
+            </mat-expansion-panel-header>
+            <p (click)="MosPag('Ejemplos')" [ngClass]="PagAct==='Ejemplos' ? 'IteAct' : ''">· Ejemplos</p>
+            <p (click)="MosPag('Configuración')" [ngClass]="PagAct==='Configuración' ? 'IteAct' : ''">· Configuración</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle (click)="MenAct='Membresías'" [expanded]="MenAct==='Membresías'" [ngClass]="MenAct==='Membresías' ? 'MenAct' : ''">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="fw-bolder fs-6 text-secondary"><i class="bi bi-award-fill IcoMen"></i><span>Membresías</span></mat-panel-title>
+            </mat-expansion-panel-header>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Definición')" [ngClass]="PagAct==='Definición' ? 'IteAct' : ''">· Definición</p>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Pagos')" [ngClass]="PagAct==='Pagos' ? 'IteAct' : ''">· Pagos</p>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Proveedor'" (click)="MosPag('Detalles')" [ngClass]="PagAct==='Detalles' ? 'IteAct' : ''">· Detalles</p>
+          </mat-expansion-panel>
+
+          <!--
+          <mat-expansion-panel hideToggle (click)="MenAct='Billetera'" [expanded]="MenAct==='Billetera'" [ngClass]="MenAct==='Billetera' ? 'MenAct' : ''">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="fw-bolder fs-6 text-secondary"><i class="bi bi-wallet-fill IcoMen"></i><span>Billetera</span></mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <p (click)="MosPag('Movimientos')" [ngClass]="PagAct==='Movimientos' ? 'IteAct' : ''">· Movimientos</p>
+          </mat-expansion-panel>
+          -->
+
+          <mat-expansion-panel *ngIf="servicios.UsuMat.Tipo == 'Admin'" hideToggle (click)="MenAct='Datos'" [expanded]="MenAct==='Datos'" [ngClass]="MenAct==='Datos' ? 'MenAct' : ''">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="fw-bolder fs-6 text-secondary"><i class="bi bi-database-fill IcoMen"></i><span>Datos</span></mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Categorías')" [ngClass]="PagAct==='Categorías' ? 'IteAct' : ''">· Categorías</p>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Paises')" [ngClass]="PagAct==='Paises' ? 'IteAct' : ''">· Paises</p>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Idiomas')" [ngClass]="PagAct==='Idiomas' ? 'IteAct' : ''">· Idiomas</p>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Parametros')" [ngClass]="PagAct==='Parametros' ? 'IteAct' : ''">· Parámetros</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel *ngIf="servicios.UsuMat.Tipo == 'Admin'" hideToggle (click)="MenAct='Soporte'" [expanded]="MenAct==='Soporte'" [ngClass]="MenAct==='Soporte' ? 'MenAct' : ''">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="fw-bolder fs-6 text-secondary"><i class="bi bi-question-diamond-fill IcoMen"></i><span>Soporte</span></mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Preguntas')" [ngClass]="PagAct==='Preguntas' ? 'IteAct' : ''">· FAQ</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel *ngIf="servicios.UsuMat.Tipo == 'Admin'" hideToggle (click)="MenAct='Usuarios'" [expanded]="MenAct==='Usuarios'" [ngClass]="MenAct==='Usuarios' ? 'MenAct' : ''">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="fw-bolder fs-6 text-secondary"><i class="bi bi-people-fill IcoMen"></i><span>Usuarios</span></mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Administradores')" [ngClass]="PagAct==='Administradores' ? 'IteAct' : ''">· Administradores</p>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Soporte')" [ngClass]="PagAct==='Soporte' ? 'IteAct' : ''">· Soporte</p>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Proveedores')" [ngClass]="PagAct==='Proveedores' ? 'IteAct' : ''">· Proveedores</p>
+            <p *ngIf="servicios.UsuMat.Tipo == 'Admin'" (click)="MosPag('Clientes')" [ngClass]="PagAct==='Clientes' ? 'IteAct' : ''">· Clientes</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion class="example-headers-align">
+          <mat-expansion-panel hideToggle (click)="MenAct='Opciones'" [expanded]="MenAct==='Opciones'" class="MenOpc">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="fw-bolder fs-6 text-secondary"><i class="bi bi-gear-fill IcoMen"></i><span>Opciones</span></mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <p (click)="MosPag('Perfil')" [ngClass]="PagAct==='Perfil' ? 'IteAct' : ''">· Perfil</p>
+            <p (click)="MosPag('Ayuda')" [ngClass]="PagAct==='Ayuda' ? 'IteAct' : ''">· Ayuda</p>
+            <p (click)="MosPag('Salir')" [ngClass]="PagAct==='Salir' ? 'IteAct' : ''">· Salir</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+      </div>
+      <div class="p-3" [ngClass]="servicios.UsuMat.NRegistro ? 'col-10' : ''">
+        <!-- Seccion Login -->
+        <section *ngIf="PagAct == 'Inicio' && !servicios.UsuMat.NRegistro">
+          <div class="row justify-content-center">
+            <div class="col-sm-8 col-lg-4">
+              <div class="card mt-5 CarLog">
+                <h5 class="card-header">Iniciar sesión</h5>
+                <div class="card-body">
+                  <p>Escribe tu email y contraseña para iniciar sesión</p>
+                  <div class="mb-3">
+                    <label for="Email" class="form-label m-0 fw-bold">Email</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                      <input type="email" class="form-control" id="Email" placeholder="Email del usuario" [(ngModel)]="Email">
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="Contraseña" class="form-label m-0 fw-bold">Contraseña</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-asterisk"></i></span>
+                      <input type="password" class="form-control" id="Contraseña" placeholder="Contraseña del usuario" [(ngModel)]="Pass">
+                    </div>
+                    <div class="form-text text-end fw-bold"><span style="cursor:pointer;" (click)="OlvCon()">¿Olvido su contraseña?</span></div>
+                  </div>
+                  <button class="btn btn-primary w-100" (click)="Login()">Iniciar sesión</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Seccion Dash -->
+        <section *ngIf="PagAct == 'Inicio' && servicios.UsuMat.NRegistro" style="min-height:750px">
+          <div class="row justify-content-center">
+            <div class="TitMod w-100">
+              <h5 class="m-0 text-muted fw-bolder">{{PagAct}}</h5>
+            </div>
+
+            <div class="col-sm-12 col-lg-6 p-1 text-center">
+              <apx-chart *ngIf="GraA" #GraAEle id="GraAEle" [series]="GraA.series" [chart]="GraA.chart" [colors]="GraA.colors" [xaxis]="GraA.xaxis" [title]="GraA.title"></apx-chart>
+            </div>
+            <div class="col-sm-12 col-lg-6 p-1 text-center">
+              <apx-chart *ngIf="GraB" #GraBEle id="GraBEle" [series]="GraB.series" [chart]="GraB.chart" [labels]="GraB.labels" [legend]="GraD.legend"></apx-chart>
+            </div>
+            <div class="col-sm-12 col-lg-6 p-1 text-center">
+              <apx-chart *ngIf="GraC" #GraCEle id="GraCEle" [series]="GraC.series" [chart]="GraC.chart" [dataLabels]="GraC.dataLabels" [plotOptions]="GraC.plotOptions" [title]="GraC.title" [colors]="GraC.colors"></apx-chart>
+            </div>
+            <div class="col-sm-12 col-lg-6 p-1 text-center">
+              <apx-chart *ngIf="GraD" #GraDEle id="GraDEle" [series]="GraD.series" [chart]="GraD.chart" [stroke]="GraD.stroke" [dataLabels]="GraD.dataLabels" [plotOptions]="GraD.plotOptions" [xaxis]="GraD.xaxis" [colors]="GraD.colors" [fill]="GraD.fill" [yaxis]="GraD.yaxis" [legend]="GraD.legend"></apx-chart>
+            </div>
+          </div>
+        </section>
+
+        <!-- Seccion Detalles -->
+        <section *ngIf="PagAct == 'Detalles' && servicios.UsuMat.NRegistro" style="min-height:750px">
+          <div class="row">
+            <div class="col">
+              <div class="TitMod w-100">
+                <h5 class="m-0 text-muted fw-bolder">{{DGM.Menu}} / <span>{{DGM.Nombre}}</span></h5>
+              </div>
+              <div class="row">
+                <div class="col-8 p-4">
+                  <div class="w-100 p-2 text-start bg-light rounded-2" style="height: 100px;">
+                    <i style="float: left;" class="bi bi-check-circle-fill fs-3 m-3 IcoMen"></i>
+                    <h5 class="m-0">Aumenta tus ingresos</h5>
+                    <p>¡Descubre el poder de una membresía que transformará tu negocio! Accederás a recursos diseñados para impulsar tus ventas</p>
+                  </div>
+                </div>
+                <div class="col-4 p-4">
+                  <div class="w-100 p-2 bg-light rounded-2 d-flex justify-content-center align-items-center" style="height: 100px;">
+                    <p class="m-0 fw-bolder fs-5" [ngClass]="servicios.DiaDis > 5 ? 'text-success' : 'text-warning'" >{{servicios.DiaDis}} Días Disponibles</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col p-4 d-flex justify-content-center">
+
+                  <div *ngFor="let mem of LisMem" class="card m-3" style="width: 25rem;">
+                    <div class="card-body">
+                      <h5 class="card-title m-0">{{mem.Descripcion}} <span class="text-success" style="float:right;">{{servicios.Pais.SimMon}}{{mem.Precio}}</span> </h5>
+                      <p class="card-text fw-bolder text-secondary">({{mem.Duracion}} Días)</p>
+                      <p class="card-text">{{mem.Beneficios}}</p>
+                      <a href="#" class="btn btn-primary w-100" (click)="PagMem(mem)">Contratar</a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Seccion Perfil -->
+        <section *ngIf="PagAct == 'Perfil' && servicios.UsuMat.NRegistro" class="mb-5" style="min-height:750px">
+
+          <div class="row justify-content-center">
+            <div class="col">
+              <div class="TitMod w-100">
+                <h5 class="m-0 text-muted fw-bolder">{{DGM.Menu}} / <span>{{DGM.Nombre}}</span></h5>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="mt-3 p-4 bg-light rounded">
+                <p class="mb-3 fw-bold text-secondary">Datos Básicos</p>
+                <div class="row">
+                  <div class="col">
+                    <div *ngIf="servicios.UsuMat.FotPer && Cargando == '' && !servicios.UsuMat.FotPer.includes('https://')" (click)="CarFot('FotPer')" class="mx-auto" style="height: 150px; width: 150px; border: 1px solid #ddd; border-radius: 50%; background: url('{{servicios.ApiUrl}}img/usu/{{servicios.UsuMat.FotPer}}') center center / cover no-repeat;"></div>
+                    <div *ngIf="servicios.UsuMat.FotPer && Cargando == '' && servicios.UsuMat.FotPer.includes('https://')" (click)="CarFot('FotPer')" class="mx-auto" style="height: 150px; width: 150px; border: 1px solid #ddd; border-radius: 50%; background: url('{{servicios.AjuFPRS(servicios.UsuMat.FotPer)}}') center center / cover no-repeat;"></div>
+                    <mat-spinner *ngIf="Cargando == 'FotPer'" style="margin: auto auto;"></mat-spinner>
+                  </div>
+                  <div class="col">
+                    <div class="form-group m-1">
+                        <label for="Nombre"><strong>Nombre<span style="color:#f00;">*</span></strong></label>
+                        <input type="text" class="form-control" [(ngModel)]="servicios.UsuMat.Nombre" id="Nombre" maxlength="40">
+                    </div>
+                    <div *ngIf="servicios.UsuMat.Tipo!='Proveedor'" class="form-group m-1">
+                        <label for="Apellido"><strong>Apellido<span style="color:#f00;">*</span></strong></label>
+                        <input type="text" class="form-control" [(ngModel)]="servicios.UsuMat.Apellido" id="Apellido">
+                    </div>
+
+                    <div *ngIf="servicios.UsuMat.Tipo=='Proveedor'" class="form-group m-1">
+                        <label for="Descripcion"><strong>Descripción<span style="color:#f00;">*</span></strong></label>
+                        <textarea class="form-control" rows="3" [(ngModel)]="servicios.UsuMat.Descripcion" id="Descripcion" placeholder="Escriba la Descripción"></textarea>
+                    </div>
+
+                  </div>
+                  <div class="col">
+                    <div class="form-group m-1">
+                        <label for="Email"><strong>Email<span style="color:#f00;">*</span></strong></label>
+                        <input type="text" class="form-control" [(ngModel)]="servicios.UsuMat.Email" id="Email">
+                    </div>
+
+                    <div class="form-group m-1">
+                        <label for="Telefono"><strong>Teléfono<span style="color:#f00;">*</span></strong></label>
+                        <div class="d-flex gap-2">
+                          <select class="form-select w-25" [(ngModel)]="servicios.UsuMat.CodPai" id="CodPai">
+                            <option *ngFor="let ite of servicios.UsuMat.LisPai" [value]="ite.Codigo">{{ite.Nombre}} (+{{ite.Codigo}})</option>
+                          </select>
+                          <input type="text" class="form-control w-75" [(ngModel)]="servicios.UsuMat.Telefono" id="Telefono">
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="servicios.UsuMat.Tipo=='Proveedor'" class="form-group m-1">
+                        <label for="WebSite"><strong>WebSite<span style="color:#f00;">*</span></strong></label>
+                        <input type="text" class="form-control" [(ngModel)]="servicios.UsuMat.WebSite" id="WebSite">
+                    </div>
+                  </div>
+                  <div *ngIf="servicios.UsuMat.Tipo ==='Proveedor'" class="col">
+                    <div class="form-group m-1">
+                        <label for="Horario"><strong>Horario<span style="color:#f00;">*</span></strong></label>
+                        <input type="text" class="form-control" [(ngModel)]="servicios.UsuMat.Horario" id="Horario">
+                    </div>
+                    <div class="form-group m-1">
+                        <label for="Descuento"><strong>Descuento %<span style="color:#f00;">*</span></strong></label>
+                        <input type="number" class="form-control" [(ngModel)]="servicios.UsuMat.Descuento" id="Descuento">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="servicios.UsuMat.Tipo=='Proveedor'" class="row">
+            <div class="col-6">
+              <div class="mt-3 p-4 bg-light rounded">
+                <p class="mb-3 fw-bold text-secondary">Fotos</p>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group mb-3">
+                      <div class="bg-light rounded-3" role="button" (click)="CarFot('ImaPro')">
+                        <img class="rounded-3 m-2" src="{{servicios.ApiUrl}}/img/usu/{{servicios.UsuMat.Imagen}}" style="height: 150px; width: 95%; object-fit: cover;">
+                        <label class="w-100 text-center mb-2"><strong>Imagen Principal<span style="color:#f00;">*</span></strong></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <label for="IBSerFotPub"><strong>Fotos Publicitarias</strong></label>
+                    <div class="w-100 border rounded" style="overflow-y: auto; overflow-x: hidden;">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotPro1')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/usu/{{servicios.UsuMat.Foto1}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 1</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotPro2')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/usu/{{servicios.UsuMat.Foto2}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 2</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotPro3')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/usu/{{servicios.UsuMat.Foto3}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 3</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotPro4')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/usu/{{servicios.UsuMat.Foto4}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 4</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotPro5')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/usu/{{servicios.UsuMat.Foto5}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 5</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotPro6')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/usu/{{servicios.UsuMat.Foto6}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 6</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="col-6">
+              <div class="mt-3 p-4 bg-light rounded">
+                <p class="mb-3 fw-bold text-secondary">Categorías</p>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group mb-3">
+                      <br>
+                      <p *ngFor="let ite of servicios.UsuMat.LisCat" (click)="PerSelCat(ite)" class="ParChi" role="button" [ngStyle]="ite.Sel === 'No' ? {'background':'linear-gradient( white, white) padding-box,linear-gradient(#DAE5F2,#DAE5F2) border-box'} : {'background':'linear-gradient( white, white) padding-box,linear-gradient(135deg, #FF865F, #FCCC2A, #4DCD9A, #08C2FF) border-box'}">
+                        <img src="{{servicios.ApiUrl}}img/cat/{{ite.SVG}}">
+                        {{ite.Nombre}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-3 p-4 bg-light rounded">
+                <p class="mb-3 fw-bold text-secondary">Ubicación</p>
+                <div class="row">
+                  <div class="col">
+                    <div class="row my-2 mx-0 border rounded" style="height: 400px; overflow: hidden;">
+                      <div class="m-0 p-0 w-100">
+                        <input id="InpBusDonD" #InpBusDonD [(ngModel)]="servicios.UsuMat.DirBusD" (ngModelChange)="ActDirD('','','','','')" type="text" placeholder="Dirección ..." style="width:100%; background-color: white; border:2px solid gray; border-radius:5px;">
+                      </div>
+                      <div class="m-0 p-0" style="width:100%; height:100%;">
+                        <mat-spinner *ngIf="CarMapD" style="margin: 100px auto;" [diameter]="50"></mat-spinner>
+                        <div #mapD id="mapD" [ngStyle]="CarMapD ? {'opacity': '0'} : {'opacity': '1'}"></div>
+                      </div>
+                    </div>
+
+                    <input id="BusDes" #BusDes type="hidden">
+                    <input id="BusLatLon" #BusLatLon type="hidden">
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row mb-5">
+            <div class="col">
+              <div class="mt-3 p-4 bg-light text-center rounded">
+                  <button class="btn btn-primary" (click)="ActPer()">Guardar Características del Perfil</button>
+              </div>
+            </div>
+          </div>
+
+          <!--
+          <div class="row justify-content-center">
+            <div class="col-sm-8 col-lg-6">
+              <div class="card mt-5">
+                <h5 class="card-header">Datos Personales</h5>
+                <div class="card-body">
+                    <table class="w-100">
+                      <tr>
+                        <td colspan="2" style="text-align: center; padding: 10px;">
+                          <div *ngIf="servicios.UsuMat.FotPer && Cargando == '' && !servicios.UsuMat.FotPer.includes('https://')" (click)="CarFot('FotPer')" class="mx-auto" style="height: 150px; width: 150px; border-radius: 50%; background: url('{{servicios.ApiUrl}}img/usu/{{servicios.UsuMat.FotPer}}') center center / cover no-repeat;"></div>
+                          <div *ngIf="servicios.UsuMat.FotPer && Cargando == '' && servicios.UsuMat.FotPer.includes('https://')" (click)="CarFot('FotPer')" class="mx-auto" style="height: 150px; width: 150px; border-radius: 50%; background: url('{{servicios.AjuFPRS(servicios.UsuMat.FotPer)}}') center center / cover no-repeat;"></div>
+                          <mat-spinner *ngIf="Cargando == 'FotPer'" style="margin: auto auto;"></mat-spinner>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                            <div class="form-group m-1">
+                                <label for="Nombre"><strong>Nombre<span style="color:#f00;">*</span></strong></label>
+                                <input type="text" class="form-control" [(ngModel)]="servicios.UsuMat.Nombre" id="Nombre">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group m-1">
+                                <label for="Apellido"><strong>Apellido<span style="color:#f00;">*</span></strong></label>
+                                <input type="text" class="form-control" [(ngModel)]="servicios.UsuMat.Apellido" id="Apellido">
+                            </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                            <div class="form-group m-1">
+                                <label for="Email"><strong>Email<span style="color:#f00;">*</span></strong></label>
+                                <input type="text" class="form-control" [(ngModel)]="servicios.UsuMat.Email" id="Email">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group m-1">
+                                <label for="Telefono"><strong>Teléfono<span style="color:#f00;">*</span></strong></label>
+                                <input type="text" class="form-control" [(ngModel)]="servicios.UsuMat.Telefono" id="Telefono">
+                            </div>
+                        </td>
+                      </tr>
+                      <tr>
+                          <td style="text-align:center; padding: 10px;" colspan="2">
+                              <button class="btn btn-primary" (click)="ActPer()">Guardar</button>
+                          </td>
+                      </tr>
+                    </table>
+                </div>
+            </div>
+            </div>
+          </div>
+          -->
+        </section>
+
+        <!-- Seccion Mensajes -->
+        <section *ngIf="PagAct == 'Mensajes'" style="min-height:750px">
+          <div class="row justify-content-center">
+            <div class="col">
+              <div class="TitMod w-100">
+                <h5 class="m-0 text-muted fw-bolder">{{DGM.Menu}} / <span>{{DGM.Nombre}}</span></h5>
+              </div>
+              <div class="ConMod w-100">
+                <div class="card-deck m-3 text-center">
+                  <div class="card CarLog">
+                    <div class="card-header">
+                      <h5 class="my-0 font-weight-normal">Nuevo Mensaje Emergente</h5>
+                    </div>
+                    <div class="card-body text-start">
+                      <table style="width:100%; height:90%;" cellpadding="10">
+                        <tr>
+                          <td colspan="3">
+                            <div class="form-group">
+                              <label for="ForPag"><strong>Mensaje para<span style="color:#f00;">*</span></strong></label>
+                              <select class="form-control" [(ngModel)]="MemPar" id="MemPar" placeholder="Mensaje para">
+                                <option value="">Seleccione ...</option>
+                                <!-- <option value="Todos">Todos</option> -->
+                                <option value="Proveedores">Proveedores</option>
+                                <option value="Clientes">Clientes</option>
+                                <option value="-----" disabled>-----</option>
+                                <option *ngFor="let usu of LisUsu" value="{{usu.NRegistro}}">{{usu.Tipo}} | {{usu.Nombre}} {{usu.Apellido}}</option>
+                              </select>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3">
+                            <div class="form-group">
+                              <label for="Titulo"><strong>Titulo<span style="color:#f00;">*</span></strong></label>
+                              <input type="text" class="form-control" [(ngModel)]="Titulo" id="Titulo" placeholder="Por favor escriba el Titulo del mensaje">
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3">
+                            <div class="form-group">
+                              <label for="Mensaje"><strong>Mensaje<span style="color:#f00;">*</span></strong></label>
+                              <textarea class="form-control" [(ngModel)]="Mensaje" id="Mensaje" placeholder="Por favor escriba el Contenido del mensaje" rows="3"></textarea>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" style="text-align:right;">
+                            <button (click)="Enviar();" type="button" class="btn btn-primary">Enviar Mensaje</button>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Seccion Ayuda -->
+        <section *ngIf="PagAct == 'Ayuda' && servicios.UsuMat.NRegistro" style="min-height:750px">
+          <div class="row">
+            <div class="col">
+              <div class="TitMod w-100">
+                <h5 class="m-0 text-muted fw-bolder">{{DGM.Menu}} / <span>{{DGM.Nombre}}</span></h5>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-sm-12 col-lg-6 p-4" role="button" data-bs-toggle="modal" data-bs-target="#ModAyu" (click)="PreAyu('Pre')">
+                  <div class="w-100 p-2 text-start bg-light rounded-2" style="height: 100px;">
+                    <i style="float: left;" class="bi bi-info-circle-fill fs-3 m-3 IcoMen"></i>
+                    <h5 class="m-0">Preguntas frecuentes</h5>
+                    <p>Las dudas mas comunes estan respndidas en esta sección</p>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-lg-6 p-4" role="button" data-bs-toggle="modal" data-bs-target="#ModAyu" (click)="PreAyu('Man')">
+                  <div class="w-100 p-2 text-start bg-light rounded-2" style="height: 100px;">
+                    <i style="float: left;" class="bi bi-book-half fs-3 m-3 IcoMen"></i>
+                    <h5 class="m-0">Manual de usuario</h5>
+                    <p>La descripción completa del sistema esta aquí</p>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-lg-6 p-4" role="button" data-bs-toggle="modal" data-bs-target="#ModAyu" (click)="PreAyu('Con')">
+                  <div class="w-100 p-2 text-start bg-light rounded-2" style="height: 100px;">
+                    <i style="float: left;" class="bi bi-envelope-fill fs-3 m-3 IcoMen"></i>
+                    <h5 class="m-0">Contacto con soporte</h5>
+                    <p>Nuestro equipo de soporte está listo para atenderte</p>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-lg-6 p-4" role="button" data-bs-toggle="modal" data-bs-target="#ModAyu" (click)="PreAyu('Eli')">
+                  <div class="w-100 p-2 text-start bg-light rounded-2" style="height: 100px;">
+                    <i style="float: left;" class="bi bi-trash-fill fs-3 m-3 IcoMen"></i>
+                    <h5 class="m-0">Eliminar mis datos</h5>
+                    <p>¿Estas seguro que desea eliminar sus datos?</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Seccion Modulo -->
+        <section *ngIf="(PagAct == 'Servicios' || PagAct == 'Eventos' || PagAct == 'Cupones' || PagAct == 'Noticias' || PagAct == 'Publicidad' || PagAct == 'Notificaciones' || PagAct == 'Movimientos' || PagAct == 'Ejemplos' || PagAct == 'Configuración' || PagAct == 'Definición' || PagAct == 'Pagos' || PagAct == 'Categorías' || PagAct == 'Paises' || PagAct == 'Idiomas' || PagAct == 'Parametros' || PagAct == 'Preguntas' || PagAct == 'Administradores' || PagAct == 'Soporte' || PagAct == 'Proveedores' || PagAct == 'Clientes') && DGM.Nombre">
+          <div class="row justify-content-center">
+            <div class="col">
+              <div class="TitMod w-100">
+                <h5 class="m-0 text-muted fw-bolder">{{DGM.Menu}} / <span>{{DGM.Nombre}}</span></h5>
+              </div>
+              <div class="ConMod w-100" id="ConMod">
+                <table class="table table-hover" id="ConModTab">
+                  <thead>
+                    <tr class="bg-dark">
+                      <th *ngIf="DGM.OpcFil == 'Si'"></th>
+                      <th *ngIf="DGM.OpcReg == 'Si'" style="text-align:center;">Nº</th>
+                      <th *ngFor="let ce of DGM.CamMod" [ngStyle]="{'text-align':servicios.AliCamMod(ce.Tip)}" [style]="ce.Ocu=='Si'?'display:none;':''" scope="col">{{ce.Tit}}</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngIf="!DatRes"><td colspan="100" align="center" valign="middle"><mat-spinner style="margin: 0 auto;" [diameter]="50"></mat-spinner></td></tr>
+                    <tr *ngIf="DatRes && DatRes.length == 0"><td colspan="100" class="text-center text-warning fw-bold" >No existen registros</td></tr>
+
+                    <tr *ngFor="let dat of DatRes">
+                      <td *ngIf="DGM.OpcFil == 'Si'" scope="row" style="text-align:center; vertical-align:middle;" [ngStyle]="DGM.BorEst == 'Si' ? {'border-left-width':'5px','border-left-color':servicios.ColEstMod(PagAct,dat)} : {}">
+
+                        <i *ngIf="DGM.OpcMod == 'Si' && DGM.Nombre != 'Cupones' && DGM.Nombre != 'Servicios' && DGM.Nombre != 'Eventos'" class="bi bi-pencil h2 text-warning m-2" role="button" matTooltip="Modificar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModFDA" (click)="EjeFun('Modificar',dat)"></i>
+                        <i *ngIf="DGM.OpcEli == 'Si' && DGM.Nombre != 'Cupones' && DGM.Nombre != 'Servicios' && DGM.Nombre != 'Eventos'" class="bi bi-eraser h2 text-danger m-2" role="button" matTooltip="Eliminar" matTooltipPosition="right" data-bs-toggle="modal" data-bs-target="#ModFDA" (click)="EjeFun('Eliminar',dat)"></i>
+
+                        <i *ngIf="DGM.OpcMod == 'Si' && DGM.Nombre == 'Servicios'" class="bi bi-pencil h2 text-warning m-2" role="button" matTooltip="Modificar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModSer" (click)="ProSer('Modificar',dat)"></i>
+                        <i *ngIf="DGM.OpcEli == 'Si' && DGM.Nombre == 'Servicios'" class="bi bi-eraser h2 text-danger m-2" role="button" matTooltip="Eliminar" matTooltipPosition="right" data-bs-toggle="modal" data-bs-target="#ModSer" (click)="ProSer('Eliminar',dat)"></i>
+
+                        <i *ngIf="DGM.OpcMod == 'Si' && DGM.Nombre == 'Eventos'" class="bi bi-pencil h2 text-warning m-2" role="button" matTooltip="Modificar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModEve" (click)="ProEve('Modificar',dat)"></i>
+                        <i *ngIf="DGM.OpcEli == 'Si' && DGM.Nombre == 'Eventos'" class="bi bi-eraser h2 text-danger m-2" role="button" matTooltip="Eliminar" matTooltipPosition="right" data-bs-toggle="modal" data-bs-target="#ModEve" (click)="ProEve('Eliminar',dat)"></i>
+
+                        <i *ngIf="DGM.OpcMod == 'Si' && DGM.Nombre == 'Cupones'" class="bi bi-pencil h2 text-warning m-2" role="button" matTooltip="Modificar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModCup" (click)="ProCup('Modificar',dat)"></i>
+                        <i *ngIf="DGM.OpcEli == 'Si' && DGM.Nombre == 'Cupones'" class="bi bi-eraser h2 text-danger m-2" role="button" matTooltip="Eliminar" matTooltipPosition="right" data-bs-toggle="modal" data-bs-target="#ModCup" (click)="ProCup('Eliminar',dat)"></i>
+
+                      </td>
+                      <td *ngIf="DGM.OpcReg == 'Si'" style="text-align:center;">{{dat.NRegistro}}</td>
+                      <td *ngFor="let cd of DGM.CamMod" [ngStyle]="{'text-align':servicios.AliCamMod(cd.Tip)}" [style]="cd.Ocu=='Si'?'display:none;':''">
+                          <span *ngIf="cd.Tip != 'Imagen' && cd.Tip != 'Documento' && cd.Cmp != 'Estatus'">{{servicios.ForCamMod(dat[cd.Cmp],cd)}}</span>
+                          <a style="text-decoration: none;" target="_blank" href="{{servicios.ApiUrl}}img/{{cd.Car}}/{{servicios.ForCamMod(dat[cd.Cmp],cd)}}">
+                            <img *ngIf="cd.Tip == 'Imagen' && dat[cd.Cmp] != ''" src="{{servicios.ApiUrl}}img/{{cd.Car}}/{{servicios.ForCamMod(dat[cd.Cmp],cd)}}" style="height:100px; border-radius:10px;">
+                          </a>
+                          <a target="_blank" href="{{servicios.ApiUrl}}doc/{{cd.Car}}/{{servicios.ForCamMod(dat[cd.Cmp],cd)}}">
+                            <img *ngIf="cd.Tip == 'Documento'" src="{{servicios.ApiUrl}}doc/{{cd.Car}}/fpd.png" style="height:100px; border-radius:10px;">
+                          </a>
+                          <p *ngIf="cd.Cmp == 'Estatus'" class="m-0 p-1 fw-bold text-white rounded-3" [ngStyle]="{'background':servicios.ColEstMod(PagAct,dat[cd.Cmp])}" >{{dat[cd.Cmp]}}</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="PieMod w-100 bg-light text-center rounded">
+                <table width="100%">
+                  <tr>
+                    <td width="20%" align="center" valign="middle"><span *ngIf="DatRes && DatRes.length > 0">{{DatRes.length}} Registro<span *ngIf="DatRes && DatRes.length > 1">s</span></span></td>
+                    <td width="20%" align="center" valign="middle">
+                      <i class="bi bi-arrow-clockwise h1 text-dark" role="button" matTooltip="Refrescar" matTooltipPosition="above" (click)="Refrescar()" *ngIf="DonBus != ''"></i>
+                    </td>
+                    <td width="20%" align="center" valign="middle">
+                      <i class="bi bi-search h1 text-dark" role="button" matTooltip="Buscar" matTooltipPosition="above" data-bs-toggle="modal" data-bs-target="#ModFDA" (click)="EjeFun('Buscar','')"></i>
+                    </td>
+                    <td width="20%" align="center" valign="middle">
+                      <i class="bi bi-file-earmark-spreadsheet h1 text-info" role="button" matTooltip="Exportar Excel" matTooltipPosition="above" (click)="servicios.exportAsExcelFile(OJE,DGM.Nombre)"></i>
+                    </td>
+                    <td width="20%" align="center" valign="middle">
+                      <i *ngIf="DGM.OpcAgr == 'Si' && (DGM.Nombre != 'Cupones' && DGM.Nombre != 'Servicios' && DGM.Nombre != 'Eventos')" class="bi bi-plus-circle h1 text-success" role="button" matTooltip="Agregar" matTooltipPosition="above" data-bs-toggle="modal" data-bs-target="#ModFDA" (click)="EjeFun('Agregar','')"></i>
+                      <i *ngIf="DGM.OpcAgr == 'Si' && DGM.Nombre == 'Servicios'" class="bi bi-plus-circle h1 text-success" role="button" matTooltip="Agregar" matTooltipPosition="above" data-bs-toggle="modal" data-bs-target="#ModSer" (click)="ProSer('Agregar',{})"></i>
+                      <i *ngIf="DGM.OpcAgr == 'Si' && DGM.Nombre == 'Eventos'" class="bi bi-plus-circle h1 text-success" role="button" matTooltip="Agregar" matTooltipPosition="above" data-bs-toggle="modal" data-bs-target="#ModEve" (click)="ProEve('Agregar',{})"></i>
+                      <i *ngIf="DGM.OpcAgr == 'Si' && DGM.Nombre == 'Cupones'" class="bi bi-plus-circle h1 text-success" role="button" matTooltip="Agregar" matTooltipPosition="above" data-bs-toggle="modal" data-bs-target="#ModCup" (click)="ProCup('Agregar',{})"></i>
+
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <input style=" position: absolute; top:0px; left:0px; width:10px; opacity:0;" type="file" lang="es" id="InpFot" #InpFot accept="image/png,image/jpeg" (input)="ActVal()">
+        <input style=" position: absolute; top:0px; left:0px; width:10px; opacity:0;" type="file" lang="es" id="InpDoc" #InpDoc accept="application/pdf" (input)="ActValDoc()">
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Modal Servicios -->
+<div class="modal fade bd-example-modal-lg" id="ModSer" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered col-12" role="document">
+    <div *ngIf="DetDat" class="modal-content">
+      <div class="bg-light p-2 fs-large fw-bold text-muted">{{DetDat.Acc}} Servicio {{DetDat.Nombre}}<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModSer" #CloModSer><strong>&times;</strong></a></div></div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col ConModForM">
+            <mat-tab-group style="height: 85%;" [selectedIndex]="DetDat.TabAct" (selectedIndexChange)="TabSelSer($event)">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="bi bi-grid me-2 fs-5 text-secondary"></i>
+                  <span class="fw-bolder">Básico</span>
+                  <i *ngIf="DetDat.PasTab0 == undefined" class="bi bi-circle ms-2 fs-5 text-info"></i>
+                  <i *ngIf="DetDat.PasTab0 == true" class="bi bi-check-circle ms-2 fs-5 text-success"></i>
+                  <i *ngIf="DetDat.PasTab0 == false" class="bi bi-exclamation-circle ms-2 fs-5 text-warning"></i>
+                </ng-template>
+                <div class="row m-0">
+                  <div class="col p-3">
+                    <div class="form-group mb-3">
+                      <div class="bg-light rounded-3" role="button" (click)="CarFot('ImaSer')">
+                        <img class="rounded-3 m-2" src="{{servicios.ApiUrl}}/img/ser/{{DetDat.Imagen}}" style="height: 150px; width: 95%; object-fit: cover;">
+                        <label class="w-100 text-center mb-2"><strong>Imagen<span style="color:#f00;">*</span></strong></label>
+                      </div>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="IBSerNom"><strong>Nombre<span style="color:#f00;">*</span></strong></label>
+                      <input type="text" class="form-control" [(ngModel)]="DetDat.Nombre" id="IBSerNom" placeholder="Escriba el Nombre">
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="IBSerDes"><strong>Descripción<span style="color:#f00;">*</span></strong></label>
+                      <textarea class="form-control" rows="3" [(ngModel)]="DetDat.Descripcion" id="IBSerDes" placeholder="Escriba la Descripción"></textarea>
+                    </div>
+                  </div>
+                  <div class="col p-3">
+
+                    <div class="form-group mb-3">
+                      <label for="IBSerPrecio"><strong>Precio {{servicios.Pais.SimMon}}<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.Precio" id="IBSerPrecio" placeholder="Escriba el monto del Precio">
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="IBSerDescuento"><strong>Descuento %<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.Descuento" id="IBSerDescuento" placeholder="Escriba el % del Descuento">
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="IBSerEdaMin"><strong>Edad Mínima<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.EdaMin" id="IBSerEdaMin" placeholder="Escriba el Edad Mínima">
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="IBSerEdaMax"><strong>Edad Máxima<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.EdaMax" id="IBSerEdaMax" placeholder="Escriba el Edad Máxima">
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="IBSerHor"><strong>Horario<span style="color:#f00;">*</span></strong></label>
+                      <input type="text" class="form-control" [(ngModel)]="DetDat.Horario" id="IBSerHor" placeholder="Escriba el Horario">
+                    </div>
+
+                  </div>
+                </div>
+              </mat-tab>
+            
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="bi bi-camera me-2 fs-5 text-secondary"></i>
+                  <span class="fw-bolder">Fotos y Categorías</span>
+                  <i *ngIf="DetDat.PasTab1 == undefined" class="bi bi-circle ms-2 fs-5 text-info"></i>
+                  <i *ngIf="DetDat.PasTab1 == true" class="bi bi-check-circle ms-2 fs-5 text-success"></i>
+                  <i *ngIf="DetDat.PasTab1 == false" class="bi bi-exclamation-circle ms-2 fs-5 text-warning"></i>
+                </ng-template>
+
+                <div class="row m-0">
+                  <div class="col p-3">
+                    <label for="IBSerFotPub"><strong>Fotos Publicitarias</strong></label>
+                    <div class="w-100 border rounded" style="height: 400px; overflow-y: auto; overflow-x: hidden;">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotSer1')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/ser/{{DetDat.Foto1}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 1</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotSer2')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/ser/{{DetDat.Foto2}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 2</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotSer3')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/ser/{{DetDat.Foto3}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 3</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotSer4')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/ser/{{DetDat.Foto4}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 4</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotSer5')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/ser/{{DetDat.Foto5}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 5</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotSer6')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/ser/{{DetDat.Foto6}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 6</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col p-3">
+                    <div class="form-group mb-3">
+                      <label for="IBSerLisCat"><strong>Categorías<span style="color:#f00;">*</span></strong></label>
+                      <br>
+                      <p *ngFor="let ite of DetDat.LisCat" (click)="SerSelCat(ite)" class="ParChi" role="button" [ngStyle]="ite.Sel === 'No' ? {'background':'linear-gradient( white, white) padding-box,linear-gradient(#DAE5F2,#DAE5F2) border-box'} : {'background':'linear-gradient( white, white) padding-box,linear-gradient(135deg, #FF865F, #FCCC2A, #4DCD9A, #08C2FF) border-box'}">
+                        <img src="{{servicios.ApiUrl}}img/cat/{{ite.SVG}}">
+                        {{ite.Nombre}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="bi bi-geo-alt me-2 fs-5 text-secondary"></i>
+                  <span class="fw-bolder">Ubicación</span>
+                  <i *ngIf="DetDat.PasTab2 == undefined" class="bi bi-circle ms-2 fs-5 text-info"></i>
+                  <i *ngIf="DetDat.PasTab2 == true" class="bi bi-check-circle ms-2 fs-5 text-success"></i>
+                  <i *ngIf="DetDat.PasTab2 == false" class="bi bi-exclamation-circle ms-2 fs-5 text-warning"></i>
+                </ng-template>
+                <div class="row m-0">
+                  <div class="col p-3">
+                    <div class="row my-2 mx-0 border rounded" style="height: 400px; overflow: hidden;">
+                      <div class="m-0 p-0 w-100">
+                        <input id="InpBusDonB" #InpBusDonB [(ngModel)]="DetDat.DirBusB" (ngModelChange)="ActDirB('','','','','')" type="text" placeholder="Dirección ..." style="width:100%; background-color: white; border:2px solid gray; border-radius:5px;">
+                      </div>
+                      <div class="m-0 p-0" style="width:100%; height:100%;">
+                        <mat-spinner *ngIf="CarMapB" style="margin: 100px auto;" [diameter]="50"></mat-spinner>
+                        <div #mapB id="mapB" [ngStyle]="CarMapB ? {'opacity': '0'} : {'opacity': '1'}"></div>
+                      </div>
+                    </div>
+
+                    <input id="BusDes" #BusDes type="hidden">
+                    <input id="BusLatLon" #BusLatLon type="hidden">
+                  </div>
+                </div>
+              </mat-tab>
+
+            </mat-tab-group>
+
+            <div class="row m-0 w-100 bg-light rounded-3" style="height: 12%;">
+              <div class="col h-100">
+                
+              </div>
+              <div class="col h-100">
+                
+              </div>
+              <div class="col h-100 d-flex justify-content-center align-items-center">
+                <button *ngIf="DetDat.Acc != 'Eliminar'" class="btn btn-primary w-100" (click)="SigPesSer()">Siguiente</button>
+                <button *ngIf="DetDat.Acc == 'Eliminar'" class="btn btn-danger w-100" (click)="EliSer()">Eliminar Servicio</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Eventos -->
+<div class="modal fade bd-example-modal-lg" id="ModEve" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered col-12" role="document">
+    <div *ngIf="DetDat" class="modal-content">
+      <div class="bg-light p-2 fs-large fw-bold text-muted">{{DetDat.Acc}} Evento {{DetDat.Nombre}}<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModEve" #CloModEve><strong>&times;</strong></a></div></div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col ConModForM">
+            <mat-tab-group style="height: 85%;" [selectedIndex]="DetDat.TabAct" (selectedIndexChange)="TabSelEve($event)">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="bi bi-grid me-2 fs-5 text-secondary"></i>
+                  <span class="fw-bolder">Básico</span>
+                  <i *ngIf="DetDat.PasTab0 == undefined" class="bi bi-circle ms-2 fs-5 text-info"></i>
+                  <i *ngIf="DetDat.PasTab0 == true" class="bi bi-check-circle ms-2 fs-5 text-success"></i>
+                  <i *ngIf="DetDat.PasTab0 == false" class="bi bi-exclamation-circle ms-2 fs-5 text-warning"></i>
+                </ng-template>
+                <div class="row m-0">
+                  <div class="col p-3">
+                    <div class="form-group mb-3">
+                      <div class="bg-light rounded-3" role="button" (click)="CarFot('ImaEve')">
+                        <img class="rounded-3 m-2" src="{{servicios.ApiUrl}}/img/eve/{{DetDat.Imagen}}" style="height: 150px; width: 95%; object-fit: cover;">
+                        <label class="w-100 text-center mb-2"><strong>Imagen<span style="color:#f00;">*</span></strong></label>
+                      </div>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="IBEveNom"><strong>Nombre<span style="color:#f00;">*</span></strong></label>
+                      <input type="text" class="form-control" [(ngModel)]="DetDat.Nombre" id="IBEveNom" placeholder="Escriba el Nombre">
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="IBEveDes"><strong>Descripción<span style="color:#f00;">*</span></strong></label>
+                      <textarea class="form-control" rows="3" [(ngModel)]="DetDat.Descripcion" id="IBEveDes" placeholder="Escriba la Descripción"></textarea>
+                    </div>
+                  </div>
+                  <div class="col p-3">
+
+                    <div class="form-group mb-2">
+                      <label for="IBEvePrecio"><strong>Precio {{servicios.Pais.SimMon}}<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.Precio" id="IBEvePrecio" placeholder="Escriba el monto del Precio">
+                    </div>
+
+                    <div class="form-group mb-2">
+                      <label for="IBEveDescuento"><strong>Descuento %<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.Descuento" id="IBEveDescuento" placeholder="Escriba el % del Descuento">
+                    </div>
+
+                    <div class="form-group mb-2">
+                      <label for="IBEveEdaMin"><strong>Edad Mínima<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.EdaMin" id="IBEveEdaMin" placeholder="Escriba el Edad Mínima">
+                    </div>
+
+                    <div class="form-group mb-2">
+                      <label for="IBEveEdaMax"><strong>Edad Máxima<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.EdaMax" id="IBEveEdaMax" placeholder="Escriba el Edad Máxima">
+                    </div>
+
+                    <div class="form-group mb-2">
+                      <label for="IBEveFec"><strong>Fecha<span style="color:#f00;">*</span></strong></label>
+                      <input type="date" class="form-control" [(ngModel)]="DetDat.FecHorEve" id="IBEveFec" placeholder="Escriba la Fecha">
+                    </div>
+
+                    <div class="form-group mb-2">
+                      <label for="IBEveHor"><strong>Horario<span style="color:#f00;">*</span></strong></label>
+                      <input type="text" class="form-control" [(ngModel)]="DetDat.Horario" id="IBEveHor" placeholder="Escriba el Horario">
+                    </div>
+
+                  </div>
+                </div>
+              </mat-tab>
+            
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="bi bi-camera me-2 fs-5 text-secondary"></i>
+                  <span class="fw-bolder">Fotos y Categorías</span>
+                  <i *ngIf="DetDat.PasTab1 == undefined" class="bi bi-circle ms-2 fs-5 text-info"></i>
+                  <i *ngIf="DetDat.PasTab1 == true" class="bi bi-check-circle ms-2 fs-5 text-success"></i>
+                  <i *ngIf="DetDat.PasTab1 == false" class="bi bi-exclamation-circle ms-2 fs-5 text-warning"></i>
+                </ng-template>
+
+                <div class="row m-0">
+                  <div class="col p-3">
+                    <label for="IBEveFotPub"><strong>Fotos Publicitarias</strong></label>
+                    <div class="w-100 border rounded" style="height: 400px; overflow-y: auto; overflow-x: hidden;">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotEve1')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/eve/{{DetDat.Foto1}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 1</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotEve2')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/eve/{{DetDat.Foto2}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 2</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotEve3')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/eve/{{DetDat.Foto3}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 3</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotEve4')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/eve/{{DetDat.Foto4}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 4</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotEve5')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/eve/{{DetDat.Foto5}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 5</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotEve6')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/eve/{{DetDat.Foto6}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 6</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col p-3">
+                    <div class="form-group mb-3">
+                      <label for="IBEveLisCat"><strong>Categorías<span style="color:#f00;">*</span></strong></label>
+                      <br>
+                      <p *ngFor="let ite of DetDat.LisCat" (click)="EveSelCat(ite)" class="ParChi" role="button" [ngStyle]="ite.Sel === 'No' ? {'background':'linear-gradient( white, white) padding-box,linear-gradient(#DAE5F2,#DAE5F2) border-box'} : {'background':'linear-gradient( white, white) padding-box,linear-gradient(135deg, #FF865F, #FCCC2A, #4DCD9A, #08C2FF) border-box'}">
+                        <img src="{{servicios.ApiUrl}}img/cat/{{ite.SVG}}">
+                        {{ite.Nombre}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="bi bi-geo-alt me-2 fs-5 text-secondary"></i>
+                  <span class="fw-bolder">Ubicación</span>
+                  <i *ngIf="DetDat.PasTab2 == undefined" class="bi bi-circle ms-2 fs-5 text-info"></i>
+                  <i *ngIf="DetDat.PasTab2 == true" class="bi bi-check-circle ms-2 fs-5 text-success"></i>
+                  <i *ngIf="DetDat.PasTab2 == false" class="bi bi-exclamation-circle ms-2 fs-5 text-warning"></i>
+                </ng-template>
+                <div class="row m-0">
+                  <div class="col p-3">
+                    <div class="row my-2 mx-0 border rounded" style="height: 400px; overflow: hidden;">
+                      <div class="m-0 p-0 w-100">
+                        <input id="InpBusDonC" #InpBusDonC [(ngModel)]="DetDat.DirBusC" (ngModelChange)="ActDirC('','','','','')" type="text" placeholder="Dirección ..." style="width:100%; background-color: white; border:2px solid gray; border-radius:5px;">
+                      </div>
+                      <div class="m-0 p-0" style="width:100%; height:100%;">
+                        <mat-spinner *ngIf="CarMapC" style="margin: 100px auto;" [diameter]="50"></mat-spinner>
+                        <div #mapC id="mapC" [ngStyle]="CarMapC ? {'opacity': '0'} : {'opacity': '1'}"></div>
+                      </div>
+                    </div>
+
+                    <input id="BusDes" #BusDes type="hidden">
+                    <input id="BusLatLon" #BusLatLon type="hidden">
+                  </div>
+                </div>
+              </mat-tab>
+
+            </mat-tab-group>
+
+            <div class="row m-0 w-100 bg-light rounded-3" style="height: 12%;">
+              <div class="col h-100">
+                
+              </div>
+              <div class="col h-100">
+                
+              </div>
+              <div class="col h-100 d-flex justify-content-center align-items-center">
+                <button *ngIf="DetDat.Acc != 'Eliminar'" class="btn btn-primary w-100" (click)="SigPesEve()">Siguiente</button>
+                <button *ngIf="DetDat.Acc == 'Eliminar'" class="btn btn-danger w-100" (click)="EliEve()">Eliminar Evento</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal Cupones -->
+<div class="modal fade bd-example-modal-lg" id="ModCup" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered col-12" role="document">
+    <div *ngIf="DetDat" class="modal-content">
+      <div class="bg-light p-2 fs-large fw-bold text-muted">{{DetDat.Acc}} Cupón {{DetDat.Nombre}}<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModCup" #CloModCup><strong>&times;</strong></a></div></div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col ConModForM">
+            <mat-tab-group style="height: 85%;" [selectedIndex]="DetDat.TabAct" (selectedIndexChange)="TabSelCup($event)">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="bi bi-grid me-2 fs-5 text-secondary"></i>
+                  <span class="fw-bolder">Básico</span>
+                  <i *ngIf="DetDat.PasTab0 == undefined" class="bi bi-circle ms-2 fs-5 text-info"></i>
+                  <i *ngIf="DetDat.PasTab0 == true" class="bi bi-check-circle ms-2 fs-5 text-success"></i>
+                  <i *ngIf="DetDat.PasTab0 == false" class="bi bi-exclamation-circle ms-2 fs-5 text-warning"></i>
+                </ng-template>
+                <div class="row m-0">
+                  <div class="col p-3">
+                    <div class="form-group mb-3">
+                      <div class="bg-light rounded-3" role="button" (click)="CarFot('ImaCup')">
+                        <img class="rounded-3 m-2" src="{{servicios.ApiUrl}}/img/cup/{{DetDat.Imagen}}" style="height: 150px; width: 95%; object-fit: cover;">
+                        <label class="w-100 text-center mb-2"><strong>Imagen<span style="color:#f00;">*</span></strong></label>
+                      </div>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="IBCupNom"><strong>Nombre<span style="color:#f00;">*</span></strong></label>
+                      <input type="text" class="form-control" [(ngModel)]="DetDat.Nombre" id="IBCupNom" placeholder="Escriba el Nombre">
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="IBCupDes"><strong>Descripción<span style="color:#f00;">*</span></strong></label>
+                      <textarea class="form-control" rows="3" [(ngModel)]="DetDat.Descripcion" id="IBCupDes" placeholder="Escriba la Descripción"></textarea>
+                    </div>
+                  </div>
+                  <div class="col p-3">
+
+                    <div class="form-group mb-3">
+                      <label for="IBCupDescuento"><strong>Descuento %<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.Descuento" id="IBCupDescuento" placeholder="Escriba el % del Descuento">
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="IBCupCanCupLim"><strong>Cantidad Cupones Disponibles<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.CanCupLim" id="IBCupCanCupLim" placeholder="Escriba la Cantidad Cupos Disponibles">
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="IBCupFecHorLim"><strong>Fecha Limite<span style="color:#f00;">*</span></strong></label>
+                      <input type="datetime-local" class="form-control" [(ngModel)]="DetDat.FecHorLim" id="IBCupFecHorLim" placeholder="Escriba la Fecha Limite">
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="IBCupEdaMin"><strong>Edad Mínima<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.EdaMin" id="IBCupEdaMin" placeholder="Escriba el Edad Mínima">
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="IBCupEdaMax"><strong>Edad Máxima<span style="color:#f00;">*</span></strong></label>
+                      <input type="number" class="form-control" [(ngModel)]="DetDat.EdaMax" id="IBCupEdaMax" placeholder="Escriba el Edad Máxima">
+                    </div>
+
+                  </div>
+                </div>
+              </mat-tab>
+            
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="bi bi-camera me-2 fs-5 text-secondary"></i>
+                  <span class="fw-bolder">Fotos y Categorías</span>
+                  <i *ngIf="DetDat.PasTab1 == undefined" class="bi bi-circle ms-2 fs-5 text-info"></i>
+                  <i *ngIf="DetDat.PasTab1 == true" class="bi bi-check-circle ms-2 fs-5 text-success"></i>
+                  <i *ngIf="DetDat.PasTab1 == false" class="bi bi-exclamation-circle ms-2 fs-5 text-warning"></i>
+                </ng-template>
+
+                <div class="row m-0">
+                  <div class="col p-3">
+                    <label for="IBCupEdaMax"><strong>Fotos Publicitarias</strong></label>
+                    <div class="w-100 border rounded" style="height: 400px; overflow-y: auto; overflow-x: hidden;">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotCup1')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/cup/{{DetDat.Foto1}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 1</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotCup2')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/cup/{{DetDat.Foto2}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 2</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotCup3')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/cup/{{DetDat.Foto3}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 3</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotCup4')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/cup/{{DetDat.Foto4}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 4</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotCup5')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/cup/{{DetDat.Foto5}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 5</p>
+                        </div>
+                        <div class="col-5 m-2 bg-light rounded-3" role="button" (click)="CarFot('FotCup6')">
+                          <img class="rounded-3 mt-2" src="{{servicios.ApiUrl}}/img/cup/{{DetDat.Foto6}}" style="height: 100px; width: 100%; object-fit: cover;">
+                          <p class="text-center">Foto 6</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col p-3">
+                    <div class="form-group mb-3">
+                      <label for="IBCupLisCat"><strong>Categorías<span style="color:#f00;">*</span></strong></label>
+                      <br>
+                      <p *ngFor="let ite of DetDat.LisCat" (click)="CupSelCat(ite)" class="ParChi" role="button" [ngStyle]="ite.Sel === 'No' ? {'background':'linear-gradient( white, white) padding-box,linear-gradient(#DAE5F2,#DAE5F2) border-box'} : {'background':'linear-gradient( white, white) padding-box,linear-gradient(135deg, #FF865F, #FCCC2A, #4DCD9A, #08C2FF) border-box'}">
+                        <img src="{{servicios.ApiUrl}}img/cat/{{ite.SVG}}">
+                        {{ite.Nombre}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+            
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="bi bi-list-ol me-2 fs-5 text-secondary"></i>
+                  <span class="fw-bolder">Normativa</span>
+                  <i *ngIf="DetDat.PasTab2 == undefined" class="bi bi-circle ms-2 fs-5 text-info"></i>
+                  <i *ngIf="DetDat.PasTab2 == true" class="bi bi-check-circle ms-2 fs-5 text-success"></i>
+                  <i *ngIf="DetDat.PasTab2 == false" class="bi bi-exclamation-circle ms-2 fs-5 text-warning"></i>
+                </ng-template>
+                <div class="row m-0">
+                  <div class="col p-3">
+                    <div class="form-group mb-3">
+                      <label for="IBCupUso"><strong>Forma de Usar<span style="color:#f00;">*</span></strong></label>
+                      <textarea class="form-control" rows="5" [(ngModel)]="DetDat.Uso" id="IBCupUso" placeholder="Escriba la Forma de Usar"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="IBCupCon"><strong>Condiciones<span style="color:#f00;">*</span></strong></label>
+                      <textarea class="form-control" rows="5" [(ngModel)]="DetDat.Condiciones" id="IBCupCon" placeholder="Escriba las Condiciones"></textarea>
+                    </div>
+                  </div>
+                  <div class="col p-3">
+                    <div class="form-group mb-3">
+                      <label for="IBCupRes"><strong>Restricciones<span style="color:#f00;">*</span></strong></label>
+                      <textarea class="form-control" rows="5" [(ngModel)]="DetDat.Restricciones" id="IBCupRes" placeholder="Escriba las Restricciones"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="IBCupTer"><strong>Términos<span style="color:#f00;">*</span></strong></label>
+                      <textarea class="form-control" rows="5" [(ngModel)]="DetDat.TerCon" id="IBCupTer" placeholder="Escriba los Términos"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="bi bi-geo-alt me-2 fs-5 text-secondary"></i>
+                  <span class="fw-bolder">Ubicación</span>
+                  <i *ngIf="DetDat.PasTab3 == undefined" class="bi bi-circle ms-2 fs-5 text-info"></i>
+                  <i *ngIf="DetDat.PasTab3 == true" class="bi bi-check-circle ms-2 fs-5 text-success"></i>
+                  <i *ngIf="DetDat.PasTab3 == false" class="bi bi-exclamation-circle ms-2 fs-5 text-warning"></i>
+                </ng-template>
+                <div class="row m-0">
+                  <div class="col p-3">
+                    <div class="row my-2 mx-0 border rounded" style="height: 400px; overflow: hidden;">
+                      <div class="m-0 p-0 w-100">
+                        <input id="InpBusDonA" #InpBusDonA [(ngModel)]="DetDat.DirBusA" (ngModelChange)="ActDirA('','','','','')" type="text" placeholder="Dirección ..." style="width:100%; background-color: white; border:2px solid gray; border-radius:5px;">
+                      </div>
+                      <div class="m-0 p-0" style="width:100%; height:100%;">
+                        <mat-spinner *ngIf="CarMapA" style="margin: 100px auto;" [diameter]="50"></mat-spinner>
+                        <div #mapA id="mapA" [ngStyle]="CarMapA ? {'opacity': '0'} : {'opacity': '1'}"></div>
+                      </div>
+                    </div>
+
+                    <input id="BusDes" #BusDes type="hidden">
+                    <input id="BusLatLon" #BusLatLon type="hidden">
+                  </div>
+                </div>
+              </mat-tab>
+
+            </mat-tab-group>
+
+            <div class="row m-0 w-100 bg-light rounded-3" style="height: 12%;">
+              <div class="col h-100">
+                
+              </div>
+              <div class="col h-100">
+                
+              </div>
+              <div class="col h-100 d-flex justify-content-center align-items-center">
+                <button *ngIf="DetDat.Acc != 'Eliminar'" class="btn btn-primary w-100" (click)="SigPesCup()">Siguiente</button>
+                <button *ngIf="DetDat.Acc == 'Eliminar'" class="btn btn-danger w-100" (click)="EliCup()">Eliminar Cupón</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Abono -->
+<div class="modal fade bd-example-modal-lg" id="ModAbo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal modal-dialog-centered col-12" role="document">
+    <div class="modal-content">
+      <div class="bg-light p-2 fs-large fw-bold text-muted">Abonar saldo a Billetera<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModAbo" #CloModAbo><strong>&times;</strong></a></div></div>
+      <div class="container-fluid">
+        <div class="row m-3">
+          <div class="col p-3">
+            <p class="fw-bolder">Por favor indica el monto del abono</p>
+            <div class="form-group mb-3">
+              <label for="IBAboMon"><strong>Monto ({{servicios.Pais.SimMon}})<span style="color:#f00;">*</span></strong></label>
+              <input type="number" class="form-control" [(ngModel)]="servicios.UsuMat.MonAbo" id="IBAboMon" placeholder="Escriba el Monto">
+            </div>
+            <button class="btn btn-success w-100" (click)="AboSal()">Abonar</button>
+            <p class="fw-boler text-warning mt-5">* Mientras se concreta la afiliación con la pasarela de pago, todos los abonos serán aprobados.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal FDA -->
+<div class="modal fade bd-example-modal-lg" id="ModFDA" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered col-12" role="document">
+    <div *ngIf="servicios.DGF.DGM" class="modal-content">
+      <div class="bg-light p-2 fs-large fw-bold text-muted">{{servicios.DGF.Acc}} registro en {{servicios.DGF.DGM.Nombre}}<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModFDA" #CloModFDA><strong>&times;</strong></a></div></div>
+      <div class="container-fluid">
+        <div class="row d-flex">
+          <div class="h-100 p-2">
+            <div class="ConModFor">
+              <table class="ConModForTab">
+                <tr *ngFor="let r of servicios.DGF.DGM.TabFor.Fil; let i = index">
+                  <td class="ConModForTabTd" *ngFor="let c of servicios.DGF.DGM.TabFor.Col; let j = index">
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Texto'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tam != 'Gra'" type="text" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                      <textarea *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tam == 'Gra'" row="3" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)"></textarea>
+                    </div>
+
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Email'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="email" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Telefono'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="tel" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Entero'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="number" step="1" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Numero'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="number" step="0.01" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Moneda'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="number" step="0.01" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Porcentaje'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="number" step="0.01" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Wallet'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="number" step="0.01" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Fecha'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="date" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'FechaHora'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="datetime-local" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Select'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <select class="form-select" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                        <option *ngFor="let opt of servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Opcs" value="{{opt.Val}}" disabled="{{opt.Dis}}">{{opt.Tex}}</option>
+                      </select>
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'SelectQry'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <select class="form-select" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" [disabled]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo == 'Si' ? true : null" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                        <option *ngFor="let opt of servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Qry.Res" value="{{opt[0]}}" disabled="{{opt.Dis}}">{{opt[1]}} <span *ngIf="!servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].SelSec">{{opt[2]}}</span></option>
+                      </select>
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'NumTarCre'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="number" step="1" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'VenTarCre'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="text" step="1" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'CodTarCre'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="number" step="1" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+            
+                    <div class="form-group" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Geocerca'" [style]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Ocu=='Si'?'display:none;':''">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <input type="text" class="form-control" [(ngModel)]="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" (ngModelChange)="CamValFDA((i*servicios.DGF.DGM.TabFor.Col.length)+j)">
+                    </div>
+            
+                    <div class="form-group" style="text-align: center; margin-bottom: 0px;" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Imagen' && servicios.DGF.Acc != 'Buscar'">
+                        <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                        <br>
+                        <mat-spinner *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Imagen' && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Est == 'Cargando'" [diameter]="75" style="margin:0 auto;"></mat-spinner>
+                        <img *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Imagen' && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Est == ''" src="{{servicios.ApiUrl}}img/{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Car}}/{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Val}}" style="margin:1%; height:100px; width:100px; border-radius:10px;" (click)="CarFot('FDA,'+((i*servicios.DGF.DGM.TabFor.Col.length)+j))">
+                        <input *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo != 'Si'" type="file" class="form-control-file" lang="es" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" accept="image/png,image/jpeg" (input)="ActVal()" style="width:10px; opacity:0;">
+                    </div>
+
+                    <div class="form-group" style="text-align: center; margin-bottom: 0px;" *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Documento' && servicios.DGF.Acc != 'Buscar'">
+                      <label for="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}"><strong>{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tit}} <span *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Req == 'Si' && servicios.DGF.Acc != 'Buscar'" style="color:#f00;">*</span></strong></label>
+                      <br>
+                      <mat-spinner *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Documento' && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Est == 'Cargando'" [diameter]="75" style="margin:0 auto;"></mat-spinner>
+                      <img *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j] && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Tip == 'Documento' && servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Est == ''" src="{{servicios.ApiUrl}}doc/{{servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Car}}/fpd.png" style="margin:1%; height:100px; width:100px; border-radius:10px;" (click)="CarDoc('FDA,'+((i*servicios.DGF.DGM.TabFor.Col.length)+j))">
+                      <input *ngIf="servicios.DGF.DGM.CamMod[(i*servicios.DGF.DGM.TabFor.Col.length)+j].Blo != 'Si'" type="file" class="form-control-file" lang="es" id="IB{{(i*servicios.DGF.DGM.TabFor.Col.length)+j}}" accept="image/png,image/jpeg" (input)="ActVal()" style="width:10px; opacity:0;">
+                  </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="PieModFor w-100 bg-light text-center rounded">
+              <table class="w-100">
+                <tr>
+                  <td>
+                    <i class="bi bi-arrow-left h1 text-info" role="button" matTooltip="Volver" matTooltipPosition="above" (click)="VolFDA()"></i>
+                  </td>
+                  <td>
+                    <i *ngIf="servicios.DGF.Acc == 'Modificar' && Cargando == ''" class="bi bi-pencil h1 text-warning m-2" role="button" matTooltip="Modificar" matTooltipPosition="above" (click)="EjeFDA('Modificar')"></i>
+                    <i *ngIf="servicios.DGF.Acc == 'Eliminar' && Cargando == ''" class="bi bi-eraser h1 text-danger m-2" role="button" matTooltip="Eliminar" matTooltipPosition="above" (click)="EjeFDA('Eliminar')"></i>
+                    <i *ngIf="servicios.DGF.Acc == 'Buscar' && Cargando == ''" class="bi bi-search h1 text-dark" role="button" matTooltip="Buscar" matTooltipPosition="above" (click)="EjeFDA('Buscar')"></i>
+                    <i *ngIf="servicios.DGF.Acc == 'Agregar' && Cargando == ''" class="bi bi-plus-circle h1 text-success" role="button" matTooltip="Agregar" matTooltipPosition="above" (click)="EjeFDA('Agregar')"></i>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ayuda -->
+<div class="modal fade bd-example-modal-lg" id="ModAyu" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered col-12" role="document">
+    <div class="modal-content">
+      <div class="bg-light p-2 fs-large fw-bold text-muted">{{TitMod}}<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModAyu" #CloModAyu><strong>&times;</strong></a></div></div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col p-3" style="height:500px;">
+
+            <div *ngIf="ModMod == 'Pre'" class="w-100 h-100 overflow-auto">
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div *ngFor="let pre of LisPre; index as n" class="accordion-item">
+                  <h2 class="accordion-header m-0" id="flush-headingOne{{n}}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#flush-collapseOne'+n" aria-expanded="false" aria-controls="flush-collapseOne">
+                      <span class="fw-bold"><span class="text-secondary">{{pre.Tema}}:</span> {{pre.Pregunta}}</span>
+                    </button>
+                  </h2>
+                  <div id="flush-collapseOne{{n}}" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body pt-0">{{pre.Respuesta}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="ModMod == 'Man'" class="w-100 h-100 overflow-auto">
+              <iframe style="height: 95%; width: 100%;" [src]="servicios.GetSanURL(servicios.ApiUrl+'doc/manual.pdf')" frameborder="0"></iframe>
+            </div>
+
+            <div *ngIf="ModMod == 'Con'" class="w-100 h-100">
+              <p class="fw-bold text-center my-5">Gracias por utilizar nuestra aplicación. Si tienes alguna pregunta, problema o simplemente deseas proporcionarnos tus comentarios, no dudes en ponerte en contacto con nuestro equipo de soporte. Estamos aquí para ayudarte.</p>
+              <hr class="mb-5">
+              <div class="row d-flex justify-content-around">
+                <div class="col-3 p-3 bg-light rounded-3 text-center">
+                  <a href="mailto:{{servicios.App.EmaSop}}" target="_blank" rel="noopener noreferrer"><i class="bi bi-envelope fs-1 text-primary"></i></a>
+                  <p class="fw-bolder">EMail</p>
+                  <p>Envíanos un correo electrónico, indicando tu requerimiento.</p>
+                </div>
+                <div class="col-3 p-3 bg-light rounded-3 text-center">
+                  <a href="https://wa.me/{{servicios.Pais.CodWha}}{{servicios.App.WhaSop}}" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp fs-1 text-success"></i></a>
+                  <p class="fw-bolder">Whatsapp</p>
+                  <p>Inicia un chat con nuestro personal de atención al Usuario.</p>
+                </div>
+                <div class="col-3 p-3 bg-light rounded-3 text-center">
+                  <a href="tel:{{servicios.Pais.Codigo}}{{servicios.App.TelSop}}" target="_blank" rel="noopener noreferrer"><i class="bi bi-telephone fs-1 text-info"></i></a>
+                  <p class="fw-bolder">Teléfono</p>
+                  <p>Habla con nosotros, tus inquietudes tienen solución.</p>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="ModMod == 'Eli'" class="w-100 h-100">
+              <p class="fw-bold text-center my-5">
+                <i class="bi bi-exclamation-triangle-fill fs-1 text-danger"></i>
+                <br>
+                <br>
+                El proceso de eliminacion de usuarios no esta disponible para los usuarios de tipo administrativo.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Barra de navegacion Footer -->
+<nav class="navbar fixed-bottom foo-mob">
+  <div class="container justify-content-center">
+    <p *ngIf="!servicios.UsuMat.NRegistro" style="margin: 0px; opacity: 0.5;">{{servicios.App.Nombre}} &#64; Todos los derechos reservados</p>
+    <div *ngIf="servicios.UsuMat.NRegistro" class="row w-100 text-center">
+      <div class="col">
+        <i class="bi bi-house-door" role="button" matTooltip="inicio" matTooltipPosition="above" [ngClass]="PagAct==='Inicio' ? 'text-warning' : ''" (click)="MosPag('Inicio')"></i>
+      </div>
+      <div class="col">
+        <i class="bi bi-grid" role="button" matTooltip="Servicios" matTooltipPosition="above" [ngClass]="PagAct==='Servicios' ? 'text-warning' : ''" (click)="MosPag('Servicios')"></i>
+      </div>
+      <div class="col">
+        <i class="bi bi-calendar3" role="button" matTooltip="Eventos" matTooltipPosition="above" [ngClass]="PagAct==='Eventos' ? 'text-warning' : ''" (click)="MosPag('Eventos')"></i>
+      </div>
+      <div class="col">
+        <i class="bi bi-gift" role="button" matTooltip="Cupones" matTooltipPosition="above" [ngClass]="PagAct==='Cupones' ? 'text-warning' : ''" (click)="MosPag('Cupones')"></i>
+      </div>
+    </div>
+  </div>
+</nav>

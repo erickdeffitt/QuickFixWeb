@@ -1,0 +1,224 @@
+@import "../../styles.scss";
+
+mat-expansion-panel{
+    box-shadow: none !important;
+
+    p{
+        margin-left: 10px;
+        color: white;
+        font-weight: bolder;
+        cursor: pointer;
+    }
+}
+
+.MenAct{
+    background-color: $ColPri;
+    border-radius: 15px !important;
+
+    mat-panel-title{
+        span{
+            color: white;
+        }
+    }
+}
+
+.MenOpc{
+    margin-top: 50px !important;
+    background-color: $ColGri;
+    border-radius: 15px !important;
+
+    mat-panel-title{
+        span{
+            color: white;
+        }
+    }
+}
+
+.IcoMen{
+    margin-right: 10px;
+    padding: 7px;
+    color: $ColSeg;
+    font-size: 24px;
+
+    background: white;
+    border-radius: 10px;
+}
+
+.IteAct {
+    color: $ColWar !important;
+}
+
+.BGT{
+    background: $ColPri;
+    border-bottom: 2px solid $ColPri;
+}
+
+.CarLog{
+    i{
+        color: $ColSeg;
+        font-size: 24px;
+    }
+}
+
+
+.active {
+    color: $ColWar !important;
+    background: none;
+}
+
+.sec-con{
+    height: 85%;
+}
+
+.foo-mob{
+    padding: 20px;
+    color: $ColLig;
+
+    background: $ColDar;
+
+    .col{
+        i{
+            font-size: 1.7rem;
+        }
+    }
+}
+
+.TitMod{
+    padding: 10px;
+    border: 0px solid #f00;
+
+    h5{
+        font-size: 20px;
+    }
+}
+.ConMod{
+    padding: 10px;
+    height: 590px;
+    overflow: auto;
+
+    border: 0px solid #0ff;
+}
+.ConModFor{
+    width:100%;
+    min-height:550px;
+    border:0px solid #f00;
+}
+.ConModForM{
+    width:100%;
+    min-height:600px;
+    border:0px solid #f00;
+}
+.ConModForG{
+    width:100%;
+    min-height:650px;
+    border:0px solid #f00;
+}
+.ConModForTab{
+    width:100%;
+}
+.ConModForTabTd{
+    padding: 10px;
+}
+.PieMod{
+    padding: 10px;
+    margin-bottom: 50px;
+    border: 0px solid #f0f;
+}
+.PieModFor{
+    padding: 10px;
+    border: 0px solid #f0f;
+}
+
+.TabOpcMod{
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+.CelOpcMod{
+    margin:5px;
+    padding:5px;
+    border-radius:10px;
+    background:#eee;
+}
+
+.accordion{
+    --bs-accordion-btn-bg: #ced4da;
+    --bs-accordion-btn-focus-box-shadow: none;
+    --bs-accordion-active-bg: #f8f9fa;
+    // --bs-accordion-active-color: #ffffff;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0 10px 10px 10px !important;
+}
+
+.ParChi{
+    float: left;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3px;
+    padding: 5px;
+    width: fit-content;
+  
+    color: $ColDar;
+    font-weight: normal;
+    font-size: medium;
+  
+    border: 2px solid transparent;
+    // border-image: linear-gradient(135deg, #FF865F, #FCCC2A, #4DCD9A, #08C2FF) 2;
+  
+    background:
+          linear-gradient( white, white) padding-box,
+          linear-gradient($ColLig,$ColLig) border-box;
+          // linear-gradient(135deg, #FF865F, #FCCC2A, #4DCD9A, #08C2FF) border-box;
+  
+    border-radius: 14px !important;
+    overflow: hidden;
+  
+    img{
+      height: 24px;
+      width: 24px;
+      margin-right: 5px;
+    }
+}
+
+#mapA {
+    width: 100%;
+    height: 100%;
+    border: 0px solid blue;
+}
+.InpBusDonA {
+    z-index: 9999999999999999 !important;
+}
+
+#mapB {
+    width: 100%;
+    height: 100%;
+    border: 0px solid blue;
+}
+.InpBusDonB {
+    z-index: 9999999999999999 !important;
+}
+
+#mapC {
+    width: 100%;
+    height: 100%;
+    border: 0px solid blue;
+}
+.InpBusDonC {
+    z-index: 9999999999999999 !important;
+}
+
+#mapD {
+    width: 100%;
+    height: 100%;
+    border: 0px solid blue;
+}
+.InpBusDonD {
+    z-index: 9999999999999999 !important;
+}
+
+.pac-container {
+    z-index: 9999999999999999 !important;
+}
