@@ -84,7 +84,10 @@ export class AdmComponent {
   OJE: any = [];
 
   //////////Asignacion//////////
-  @ViewChild('CloModAsi') CloModAsi: ElementRef;
+  @ViewChild('CloModAsiAsi') CloModAsiAsi: ElementRef;
+
+  //////////Rentas - Ventas//////////
+  @ViewChild('CloModAsiRen') CloModAsiRen: ElementRef;
 
 
 
@@ -1648,6 +1651,11 @@ export class AdmComponent {
         this.PreDGM('Asistencias');
       break;
 
+      case "Rentas - Ventas":
+        this.MenAct = "Servicios";
+        this.PreDGM('Rentas - Ventas');
+      break;
+
       case "Servicios":
         this.MenAct = "Servicios";
         this.PreDGM('Servicios');
@@ -1817,10 +1825,10 @@ export class AdmComponent {
               {Val:"Asignada",Tex:"Asignada",Dis:""},
               {Val:"En proceso",Tex:"En proceso",Dis:""},
               {Val:"Atendida",Tex:"Atendida",Dis:""},
-              {Val:"Entregada",Tex:"Entregada",Dis:""},
               {Val:"Cancelada",Tex:"Cancelada",Dis:""},
             ]},
           ],
+          BorEst:"Si",
           OpcFil:"Si",
           OpcReg:"Si",
           OpcAgr:"Si",
@@ -1835,6 +1843,46 @@ export class AdmComponent {
         }
       break;
 
+      case "Rentas - Ventas":
+        this.DGM = {
+          Menu: "Servicios",
+          Nombre: "Rentas - Ventas",
+          CamMod:[
+            {Tit:"Tipo",Cmp:"Tipo",Tip:"Select",Req:"Si",VD:"Renta",Val:"",Opcs:[{Val:"Renta",Tex:"Renta",Dis:""},{Val:"Venta",Tex:"Venta",Dis:""},]},
+            {Tit:"Cliente",Cmp:"NRegCli",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Ocu:"No",Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Cliente|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
+            // {Tit:"Descripción",Cmp:"Descripcion",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
+            // {Tit:"Foto",Cmp:"Foto",Tip:"Imagen",Req:"Si",VD:"fpda.png",Val:"",Est:"",Car:"asi"},
+            {Tit:"Dirección",Cmp:"UbiDir",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
+            {Tit:"Técnico",Cmp:"NRegTec",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Ocu:"No",Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Tecnico|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
+            {Tit:"Observación",Cmp:"Observacion",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
+
+            {Tit:"Solicitado",Cmp:"FecHorReg",Tip:"FechaHora",Req:"Si",VD:VDFHA,Val:"",Blo:"No"},
+            {Tit:"Asignado",Cmp:"FecHorAsi",Tip:"FechaHora",Req:"No",VD:"0000-00-00 00:00:00",Val:"",Blo:"No"},
+            {Tit:"Terminado",Cmp:"FecHorTer",Tip:"FechaHora",Req:"No",VD:"0000-00-00 00:00:00",Val:"",Blo:"No"},
+
+            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"Nueva",Val:"",Opcs:[
+              {Val:"Nueva",Tex:"Nueva",Dis:""},
+              {Val:"Asignada",Tex:"Asignada",Dis:""},
+              {Val:"En proceso",Tex:"En proceso",Dis:""},
+              {Val:"Entregada",Tex:"Entregada",Dis:""},
+              {Val:"Recuperada",Tex:"Recuperada",Dis:""},
+              {Val:"Cancelada",Tex:"Cancelada",Dis:""},
+            ]},
+          ],
+          BorEst:"Si",
+          OpcFil:"Si",
+          OpcReg:"Si",
+          OpcAgr:"Si",
+          OpcMod:"Si",
+          OpcEli:"Si",
+          CamQry:"*",
+          Tabla:"herramientas",
+          Donde:"",
+          Ordena:"ORDER BY NRegistro DESC",
+          Carpeta:"asi",
+          TabFor:{"Fil":[1,2,3,4,5],"Col":[1,2]},
+        }
+      break;
 
       case "Servicios":
         this.DGM = {
@@ -2448,10 +2496,10 @@ export class AdmComponent {
   CarDetAsi(Asi){
     this.DetDat = Asi;
     this.DetDat.NRegTec = "";
-    this.CarLisTec();
+    this.CarLisTecAsi();
   }
 
-  AsiTec(){
+  AsiTecAsi(){
     if (!this.servicios.ValCam("IBNRegTec","Técnico","Texto",this.DetDat.NRegTec,"Si")){return}
 
     let NueEst = "Asignada";
@@ -2463,13 +2511,13 @@ export class AdmComponent {
       this.servicios.EnvNot(this.DetDat.NRegCli,"Asistencia Asignada","Tu asistencia fue asignada","Asistencias",this.DetDat.NRegistro)
       this.servicios.EnvNot(this.DetDat.NRegTec,"Asistencia Asignada","Tienes una nueva asistencia asignada","Asistencias",this.DetDat.NRegistro)
 
-      this.CloModAsi.nativeElement.click();
+      this.CloModAsiAsi.nativeElement.click();
       this.servicios.EnvMsgSim("La Asistencia fue asignada","Hecho")
     }).catch((err)=>{console.log(err)});
 
   }
 
-  CarLisTec(){
+  CarLisTecAsi(){
     this.servicios.AccSobBDAA("SELECT","Si","*","","","usuarios","WHERE Tipo=|Tecnico| AND Estatus=|Activo|","","",false).then((dataRes)=>{
       let Res: any = dataRes;
       //console.log(Res);
@@ -2477,6 +2525,40 @@ export class AdmComponent {
     }).catch((err)=>{console.log(err)});
   }
   //////////////////////////////////Asignacion////////////////////////////////
+
+  //////////////////////////////////Rentas - Ventas///////////////////////////
+  CarDetRen(Ren){
+    this.DetDat = Ren;
+    this.DetDat.NRegTec = "";
+    this.CarLisTecAsi();
+  }
+
+  AsiTecRen(){
+    if (!this.servicios.ValCam("IBNRegTec","Técnico","Texto",this.DetDat.NRegTec,"Si")){return}
+
+    let NueEst = "Asignada";
+    let CyV = "NRegTec=|"+this.DetDat.NRegTec+"|,Estatus=|"+NueEst+"|,FecHorAsi=NOW()";
+    this.servicios.AccSobBDAA("UPDATE","No","","",CyV,"herramientas","WHERE NRegistro="+this.DetDat.NRegistro+"","","",false).then((dataRes)=>{
+      let Res: any = dataRes;
+      //console.log(Res);
+      this.CarLis();
+      this.servicios.EnvNot(this.DetDat.NRegCli,this.DetDat.Tipo+" Asignada","Tu "+this.DetDat.Tipo+" fue asignada",this.DetDat.Tipo,this.DetDat.NRegistro)
+      this.servicios.EnvNot(this.DetDat.NRegTec,this.DetDat.Tipo+" Asignada","Tienes una nueva "+this.DetDat.Tipo+" asignada",this.DetDat.Tipo,this.DetDat.NRegistro)
+
+      this.CloModAsiRen.nativeElement.click();
+      this.servicios.EnvMsgSim("La Asistencia fue asignada","Hecho")
+    }).catch((err)=>{console.log(err)});
+
+  }
+
+  CarLisTecRen(){
+    this.servicios.AccSobBDAA("SELECT","Si","*","","","usuarios","WHERE Tipo=|Tecnico| AND Estatus=|Activo|","","",false).then((dataRes)=>{
+      let Res: any = dataRes;
+      //console.log(Res);
+      this.DetDat.LisTec = Res.data;
+    }).catch((err)=>{console.log(err)});
+  }
+  //////////////////////////////////Rentas - Ventas///////////////////////////
 
 
 

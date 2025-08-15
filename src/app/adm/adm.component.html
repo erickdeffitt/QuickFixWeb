@@ -59,6 +59,7 @@
             </mat-expansion-panel-header>
 
             <p (click)="MosPag('Asistencias')" [ngClass]="PagAct==='Asistencias' ? 'IteAct' : ''">· Asistencias</p>
+            <p (click)="MosPag('Rentas - Ventas')" [ngClass]="PagAct==='Rentas - Ventas' ? 'IteAct' : ''">· Rentas - Ventas</p>
 
             <!--
             <p (click)="MosPag('Servicios')" [ngClass]="PagAct==='Servicios' ? 'IteAct' : ''">· Servicios</p>
@@ -573,7 +574,7 @@
         </section>
 
         <!-- Seccion Modulo -->
-        <section *ngIf="(PagAct == 'Asistencias' || PagAct == 'Servicios' || PagAct == 'Eventos' || PagAct == 'Cupones' || PagAct == 'Noticias' || PagAct == 'Publicidad' || PagAct == 'Notificaciones' || PagAct == 'Movimientos' || PagAct == 'Ejemplos' || PagAct == 'Configuración' || PagAct == 'Definición' || PagAct == 'Pagos' || PagAct == 'Herramientas' || PagAct == 'Productos' || PagAct == 'Categorías' || PagAct == 'Paises' || PagAct == 'Idiomas' || PagAct == 'Parámetros' || PagAct == 'Preguntas' || PagAct == 'Administradores' || PagAct == 'Soporte' || PagAct == 'Técnicos' || PagAct == 'Clientes') && DGM.Nombre">
+        <section *ngIf="(PagAct == 'Asistencias' || PagAct == 'Rentas - Ventas' || PagAct == 'Publicidad' || PagAct == 'Notificaciones' || PagAct == 'Movimientos' || PagAct == 'Definición' || PagAct == 'Pagos' || PagAct == 'Herramientas' || PagAct == 'Productos' || PagAct == 'Parámetros' || PagAct == 'Preguntas' || PagAct == 'Administradores' || PagAct == 'Soporte' || PagAct == 'Técnicos' || PagAct == 'Clientes') && DGM.Nombre">
           <div class="row justify-content-center">
             <div class="col">
               <div class="TitMod w-100">
@@ -594,12 +595,13 @@
                     <tr *ngIf="DatRes && DatRes.length == 0"><td colspan="100" class="text-center text-warning fw-bold" >No existen registros</td></tr>
 
                     <tr *ngFor="let dat of DatRes">
-                      <td *ngIf="DGM.OpcFil == 'Si'" scope="row" style="text-align:center; vertical-align:middle;" [ngStyle]="DGM.BorEst == 'Si' ? {'border-left-width':'5px','border-left-color':servicios.ColEstMod(PagAct,dat)} : {}">
+                      <td *ngIf="DGM.OpcFil == 'Si'" scope="row" style="text-align:center; vertical-align:middle;" [ngStyle]="DGM.BorEst == 'Si' ? {'border-left-width':'5px','border-left-color':servicios.ColEstMod(PagAct,dat.Estatus)} : {}">
 
                         <i *ngIf="DGM.OpcMod == 'Si'" class="bi bi-pencil h2 text-warning m-2" role="button" matTooltip="Modificar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModFDA" (click)="EjeFun('Modificar',dat)"></i>
                         <i *ngIf="DGM.OpcEli == 'Si'" class="bi bi-eraser h2 text-danger m-2" role="button" matTooltip="Eliminar" matTooltipPosition="right" data-bs-toggle="modal" data-bs-target="#ModFDA" (click)="EjeFun('Eliminar',dat)"></i>
 
-                        <i *ngIf="PagAct == 'Asistencias' && dat.Estatus == 'Nueva'" class="bi bi-person-gear h2 text-info m-2" role="button" matTooltip="Asignar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModAsi" (click)="CarDetAsi(dat)"></i>
+                        <i *ngIf="PagAct == 'Asistencias' && dat.Estatus == 'Nueva'" class="bi bi-person-gear h2 text-info m-2" role="button" matTooltip="Asignar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModAsiAsi" (click)="CarDetAsi(dat)"></i>
+                        <i *ngIf="PagAct == 'Rentas - Ventas' && dat.Estatus == 'Nueva'" class="bi bi-person-gear h2 text-info m-2" role="button" matTooltip="Asignar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModAsiRen" (click)="CarDetRen(dat)"></i>
 
                         <!--
                         <i *ngIf="DGM.OpcMod == 'Si' && DGM.Nombre == 'Servicios'" class="bi bi-pencil h2 text-warning m-2" role="button" matTooltip="Modificar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModSer" (click)="ProSer('Modificar',dat)"></i>
@@ -666,11 +668,11 @@
 
 
 
-<!-- Modal Asignacion -->
-<div class="modal fade bd-example-modal-lg" id="ModAsi" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<!-- Modal Asignacion Asistencia -->
+<div class="modal fade bd-example-modal-lg" id="ModAsiAsi" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal modal-dialog-centered col-12" role="document">
     <div class="modal-content" *ngIf="DetDat">
-      <div class="bg-light p-2 fs-large fw-bold text-muted"><span>Asignar</span> Asistencia<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModAsi" #CloModAsi><strong>&times;</strong></a></div></div>
+      <div class="bg-light p-2 fs-large fw-bold text-muted"><span>Asignar</span> Asistencia<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModAsiAsi" #CloModAsiAsi><strong>&times;</strong></a></div></div>
       <div class="container-fluid">
         <div class="row">
           <div class="col p-3">
@@ -683,7 +685,34 @@
               </select>
             </div>
 
-            <button class="btn btn-info w-100" (click)="AsiTec()">Asignar</button>
+            <button class="btn btn-info w-100" (click)="AsiTecAsi()">Asignar</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Asignacion Rentas - Ventas -->
+<div class="modal fade bd-example-modal-lg" id="ModAsiRen" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal modal-dialog-centered col-12" role="document">
+    <div class="modal-content" *ngIf="DetDat">
+      <div class="bg-light p-2 fs-large fw-bold text-muted"><span>Asignar</span> {{DetDat.Tipo}}<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModAsiRen" #CloModAsiRen><strong>&times;</strong></a></div></div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col p-3">
+
+            <div class="form-group mb-3">
+              <label for="IBNRegTec"><strong>Técnico<span style="color:#f00;">*</span></strong></label>
+              <select class="form-select" [(ngModel)]="DetDat.NRegTec" id="IBNRegTec">
+                <option value="">Seleccione ...</option>
+                <option *ngFor="let tec of DetDat.LisTec" value="{{tec.NRegistro}}">{{tec.Nombre}} {{tec.Apellido}}</option>
+              </select>
+            </div>
+
+            <button class="btn btn-info w-100" (click)="AsiTecRen()">Asignar</button>
 
           </div>
         </div>
@@ -1484,7 +1513,7 @@
         <i class="bi bi-car-front" role="button" matTooltip="Asistencias" matTooltipPosition="above" [ngClass]="PagAct==='Asistencias' ? 'text-warning' : ''" (click)="MosPag('Asistencias')"></i>
       </div>
       <div class="col">
-        <i class="bi bi-tools" role="button" matTooltip="Eventos" matTooltipPosition="above" [ngClass]="PagAct==='Eventos' ? 'text-warning' : ''" (click)="MosPag('Eventos')"></i>
+        <i class="bi bi-tools" role="button" matTooltip="Rentas - Ventas" matTooltipPosition="above" [ngClass]="PagAct==='Rentas - Ventas' ? 'text-warning' : ''" (click)="MosPag('Rentas - Ventas')"></i>
       </div>
       <div class="col">
         <i class="bi bi-box" role="button" matTooltip="Cupones" matTooltipPosition="above" [ngClass]="PagAct==='Cupones' ? 'text-warning' : ''" (click)="MosPag('Cupones')"></i>
