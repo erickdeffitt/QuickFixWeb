@@ -60,6 +60,7 @@
 
             <p (click)="MosPag('Asistencias')" [ngClass]="PagAct==='Asistencias' ? 'IteAct' : ''">· Asistencias</p>
             <p (click)="MosPag('Rentas - Ventas')" [ngClass]="PagAct==='Rentas - Ventas' ? 'IteAct' : ''">· Rentas - Ventas</p>
+            <p (click)="MosPag('Ferreterías')" [ngClass]="PagAct==='Ferreterías' ? 'IteAct' : ''">· Ferreterías</p>
 
             <!--
             <p (click)="MosPag('Servicios')" [ngClass]="PagAct==='Servicios' ? 'IteAct' : ''">· Servicios</p>
@@ -574,7 +575,7 @@
         </section>
 
         <!-- Seccion Modulo -->
-        <section *ngIf="(PagAct == 'Asistencias' || PagAct == 'Rentas - Ventas' || PagAct == 'Publicidad' || PagAct == 'Notificaciones' || PagAct == 'Movimientos' || PagAct == 'Definición' || PagAct == 'Pagos' || PagAct == 'Herramientas' || PagAct == 'Productos' || PagAct == 'Parámetros' || PagAct == 'Preguntas' || PagAct == 'Administradores' || PagAct == 'Soporte' || PagAct == 'Técnicos' || PagAct == 'Clientes') && DGM.Nombre">
+        <section *ngIf="(PagAct == 'Asistencias' || PagAct == 'Rentas - Ventas' || PagAct == 'Ferreterías' || PagAct == 'Publicidad' || PagAct == 'Notificaciones' || PagAct == 'Movimientos' || PagAct == 'Definición' || PagAct == 'Pagos' || PagAct == 'Herramientas' || PagAct == 'Productos' || PagAct == 'Parámetros' || PagAct == 'Preguntas' || PagAct == 'Administradores' || PagAct == 'Soporte' || PagAct == 'Técnicos' || PagAct == 'Clientes') && DGM.Nombre">
           <div class="row justify-content-center">
             <div class="col">
               <div class="TitMod w-100">
@@ -582,7 +583,7 @@
               </div>
               <div class="ConMod w-100" id="ConMod">
                 <table class="table table-hover" id="ConModTab">
-                  <thead>
+                  <thead style="position: sticky; top: 0;">
                     <tr class="bg-dark">
                       <th *ngIf="DGM.OpcFil == 'Si'"></th>
                       <th *ngIf="DGM.OpcReg == 'Si'" style="text-align:center;">Nº</th>
@@ -601,7 +602,12 @@
                         <i *ngIf="DGM.OpcEli == 'Si'" class="bi bi-eraser h2 text-danger m-2" role="button" matTooltip="Eliminar" matTooltipPosition="right" data-bs-toggle="modal" data-bs-target="#ModFDA" (click)="EjeFun('Eliminar',dat)"></i>
 
                         <i *ngIf="PagAct == 'Asistencias' && dat.Estatus == 'Nueva'" class="bi bi-person-gear h2 text-info m-2" role="button" matTooltip="Asignar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModAsiAsi" (click)="CarDetAsi(dat)"></i>
+
+                        <i *ngIf="PagAct == 'Rentas - Ventas'" class="bi bi-list-check h2 text-secondary m-2" role="button" matTooltip="Lista de herramientas" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModHerRen" (click)="CarDetRen(dat)"></i>
                         <i *ngIf="PagAct == 'Rentas - Ventas' && dat.Estatus == 'Nueva'" class="bi bi-person-gear h2 text-info m-2" role="button" matTooltip="Asignar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModAsiRen" (click)="CarDetRen(dat)"></i>
+
+                        <i *ngIf="PagAct == 'Ferreterías'" class="bi bi-list-check h2 text-secondary m-2" role="button" matTooltip="Lista de productos" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModHerFer" (click)="CarDetFer(dat)"></i>
+                        <i *ngIf="PagAct == 'Ferreterías' && dat.Estatus == 'Nueva'" class="bi bi-person-gear h2 text-info m-2" role="button" matTooltip="Asignar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModAsiFer" (click)="CarDetFer(dat)"></i>
 
                         <!--
                         <i *ngIf="DGM.OpcMod == 'Si' && DGM.Nombre == 'Servicios'" class="bi bi-pencil h2 text-warning m-2" role="button" matTooltip="Modificar" matTooltipPosition="left" data-bs-toggle="modal" data-bs-target="#ModSer" (click)="ProSer('Modificar',dat)"></i>
@@ -714,6 +720,118 @@
 
             <button class="btn btn-info w-100" (click)="AsiTecRen()">Asignar</button>
 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Herramientas Rentas - Ventas -->
+<div class="modal fade bd-example-modal-lg" id="ModHerRen" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal modal-dialog-centered col-12" style="min-width: 50%;" role="document">
+    <div class="modal-content" *ngIf="DetDat">
+      <div class="bg-light p-2 fs-large fw-bold text-muted"><span>Herramientas de la</span> {{DetDat.Tipo}}<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModHerRen" #CloModHerRen><strong>&times;</strong></a></div></div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col p-3">
+            <div style="height:400px; width:100%; overflow:auto; border:0px solid red;">
+
+              <table class="table table-hover" style="font-size:small">
+                <thead style="position: sticky; top: 0;">
+                  <tr class="bg-dark">
+                    <th style="text-align:center;">Foto</th>
+                    <th style="text-align:left;">Nombre</th>
+                    <th style="text-align:left;">Marca</th>
+                    <th style="text-align:left;">Modelo</th>
+                    <th style="text-align:right;">Precio</th>
+                    <th style="text-align:right;">Existencia</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="!DetDat.LisHer"><td colspan="100" align="center" valign="middle"><mat-spinner style="margin: 0 auto;" [diameter]="30"></mat-spinner></td></tr>
+                  <tr *ngIf="DetDat.LisHer && DetDat.LisHer.length == 0"><td colspan="100" class="text-center text-warning fw-bold" >No existen registros</td></tr>
+                  <tr *ngFor="let dat of DetDat.LisHer">
+                    <td scope="row" style="text-align:center; vertical-align:middle;"> <img src="{{servicios.ApiUrl}}img/her/{{dat.FotHer}}" style="height:100px; border-radius:10px;"></td>
+                    <td scope="row" style="text-align:left; vertical-align:middle;">{{dat.NomHer}}</td>
+                    <td scope="row" style="text-align:left; vertical-align:middle;">{{dat.MarHer}}</td>
+                    <td scope="row" style="text-align:left; vertical-align:middle;">{{dat.ModHer}}</td>
+                    <td scope="row" style="text-align:right; vertical-align:middle;">{{servicios.Pais.SimMon}}{{servicios.NumFor(dat.Precio,2)}}</td>
+                    <td scope="row" style="text-align:right; vertical-align:middle;">{{servicios.NumFor(dat.ExiHer,0)}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Asignacion Ferreterías -->
+<div class="modal fade bd-example-modal-lg" id="ModAsiFer" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal modal-dialog-centered col-12" role="document">
+    <div class="modal-content" *ngIf="DetDat">
+      <div class="bg-light p-2 fs-large fw-bold text-muted"><span>Asignar</span> Pedido<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModAsiFer" #CloModAsiFer><strong>&times;</strong></a></div></div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col p-3">
+
+            <div class="form-group mb-3">
+              <label for="IBNRegTec"><strong>Técnico<span style="color:#f00;">*</span></strong></label>
+              <select class="form-select" [(ngModel)]="DetDat.NRegTec" id="IBNRegTec">
+                <option value="">Seleccione ...</option>
+                <option *ngFor="let tec of DetDat.LisTec" value="{{tec.NRegistro}}">{{tec.Nombre}} {{tec.Apellido}}</option>
+              </select>
+            </div>
+
+            <button class="btn btn-info w-100" (click)="AsiTecFer()">Asignar</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Herramientas Ferreterías -->
+<div class="modal fade bd-example-modal-lg" id="ModHerFer" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal modal-dialog-centered col-12" style="min-width: 50%;" role="document">
+    <div class="modal-content" *ngIf="DetDat">
+      <div class="bg-light p-2 fs-large fw-bold text-muted"><span>Productos del</span> Pedido<div style="float:right;"><a style="cursor:pointer; margin-right:10px;" data-bs-dismiss="modal" data-bs-target="#ModHerFer" #CloModHerFer><strong>&times;</strong></a></div></div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col p-3">
+            <div style="height:400px; width:100%; overflow:auto; border:0px solid red;">
+
+              <table class="table table-hover" style="font-size:small">
+                <thead style="position: sticky; top: 0;">
+                  <tr class="bg-dark">
+                    <th style="text-align:center;">Foto</th>
+                    <th style="text-align:left;">Nombre</th>
+                    <th style="text-align:left;">Marca</th>
+                    <th style="text-align:left;">Modelo</th>
+                    <th style="text-align:right;">Precio</th>
+                    <th style="text-align:right;">Existencia</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="!DetDat.LisPro"><td colspan="100" align="center" valign="middle"><mat-spinner style="margin: 0 auto;" [diameter]="30"></mat-spinner></td></tr>
+                  <tr *ngIf="DetDat.LisPro && DetDat.LisPro.length == 0"><td colspan="100" class="text-center text-warning fw-bold" >No existen registros</td></tr>
+                  <tr *ngFor="let dat of DetDat.LisPro">
+                    <td scope="row" style="text-align:center; vertical-align:middle;"> <img src="{{servicios.ApiUrl}}img/pro/{{dat.FotHer}}" style="height:100px; border-radius:10px;"></td>
+                    <td scope="row" style="text-align:left; vertical-align:middle;">{{dat.NomHer}}</td>
+                    <td scope="row" style="text-align:left; vertical-align:middle;">{{dat.MarHer}}</td>
+                    <td scope="row" style="text-align:left; vertical-align:middle;">{{dat.ModHer}}</td>
+                    <td scope="row" style="text-align:right; vertical-align:middle;">{{servicios.Pais.SimMon}}{{servicios.NumFor(dat.Precio,2)}}</td>
+                    <td scope="row" style="text-align:right; vertical-align:middle;">{{servicios.NumFor(dat.ExiHer,0)}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
           </div>
         </div>
       </div>
@@ -1516,7 +1634,7 @@
         <i class="bi bi-tools" role="button" matTooltip="Rentas - Ventas" matTooltipPosition="above" [ngClass]="PagAct==='Rentas - Ventas' ? 'text-warning' : ''" (click)="MosPag('Rentas - Ventas')"></i>
       </div>
       <div class="col">
-        <i class="bi bi-box" role="button" matTooltip="Cupones" matTooltipPosition="above" [ngClass]="PagAct==='Cupones' ? 'text-warning' : ''" (click)="MosPag('Cupones')"></i>
+        <i class="bi bi-box" role="button" matTooltip="Ferreterías" matTooltipPosition="above" [ngClass]="PagAct==='Ferreterías' ? 'text-warning' : ''" (click)="MosPag('Ferreterías')"></i>
       </div>
     </div>
   </div>

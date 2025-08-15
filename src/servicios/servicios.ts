@@ -395,6 +395,22 @@ export class Servicios{
             return "#8832cf";
         }
 
+      case "Ferreterías":
+        switch (Dat) {
+          case "Nueva":
+            return "#52b686ff";
+          case "Asignada":
+            return "#228ebdff";
+          case "En proceso":
+            return "#8832cf";
+          case "Entregada":
+            return "#32ad32";
+          case "Cancelada":
+            return "#cf5132";
+          default:
+            return "#8832cf";
+        }
+
       case "Pagos":
         switch (Dat) {
           case "Nuevo":

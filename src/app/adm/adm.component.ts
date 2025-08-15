@@ -86,8 +86,13 @@ export class AdmComponent {
   //////////Asignacion//////////
   @ViewChild('CloModAsiAsi') CloModAsiAsi: ElementRef;
 
-  //////////Rentas - Ventas//////////
+  //////////Rentas - Ventas/////
   @ViewChild('CloModAsiRen') CloModAsiRen: ElementRef;
+  @ViewChild('CloModHerRen') CloModHerRen: ElementRef;
+
+  //////////Ferreterías//////////
+  @ViewChild('CloModAsiFer') CloModAsiFer: ElementRef;
+  @ViewChild('CloModHerFer') CloModHerFer: ElementRef;
 
 
 
@@ -1650,10 +1655,13 @@ export class AdmComponent {
         this.MenAct = "Servicios";
         this.PreDGM('Asistencias');
       break;
-
       case "Rentas - Ventas":
         this.MenAct = "Servicios";
         this.PreDGM('Rentas - Ventas');
+      break;
+      case "Ferreterías":
+        this.MenAct = "Servicios";
+        this.PreDGM('Ferreterías');
       break;
 
       case "Servicios":
@@ -1850,8 +1858,6 @@ export class AdmComponent {
           CamMod:[
             {Tit:"Tipo",Cmp:"Tipo",Tip:"Select",Req:"Si",VD:"Renta",Val:"",Opcs:[{Val:"Renta",Tex:"Renta",Dis:""},{Val:"Venta",Tex:"Venta",Dis:""},]},
             {Tit:"Cliente",Cmp:"NRegCli",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Ocu:"No",Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Cliente|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
-            // {Tit:"Descripción",Cmp:"Descripcion",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
-            // {Tit:"Foto",Cmp:"Foto",Tip:"Imagen",Req:"Si",VD:"fpda.png",Val:"",Est:"",Car:"asi"},
             {Tit:"Dirección",Cmp:"UbiDir",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
             {Tit:"Técnico",Cmp:"NRegTec",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Ocu:"No",Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Tecnico|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
             {Tit:"Observación",Cmp:"Observacion",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
@@ -1877,6 +1883,44 @@ export class AdmComponent {
           OpcEli:"Si",
           CamQry:"*",
           Tabla:"herramientas",
+          Donde:"",
+          Ordena:"ORDER BY NRegistro DESC",
+          Carpeta:"asi",
+          TabFor:{"Fil":[1,2,3,4,5],"Col":[1,2]},
+        }
+      break;
+
+      case "Ferreterías":
+        this.DGM = {
+          Menu: "Servicios",
+          Nombre: "Ferreterías",
+          CamMod:[
+            {Tit:"Pedido",Cmp:"Codigo",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No"},
+            {Tit:"Cliente",Cmp:"NRegCli",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Ocu:"No",Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Cliente|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
+            {Tit:"Dirección",Cmp:"UbiDir",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
+            {Tit:"Técnico",Cmp:"NRegTec",Tip:"SelectQry",Req:"Si",VD:"",Val:"",Blo:"No",Ocu:"No",Qry:{Cmps:"NRegistro,Nombre,Apellido",Tab:"usuarios",Don:"WHERE Tipo=|Tecnico|",Ord:"ORDER BY Nombre,Apellido",Res:[]}},
+            {Tit:"Observación",Cmp:"Observacion",Tip:"Texto",Req:"Si",VD:"",Val:"",Blo:"No",Tam:"Gra"},
+
+            {Tit:"Solicitado",Cmp:"FecHorReg",Tip:"FechaHora",Req:"Si",VD:VDFHA,Val:"",Blo:"No"},
+            {Tit:"Asignado",Cmp:"FecHorAsi",Tip:"FechaHora",Req:"No",VD:"0000-00-00 00:00:00",Val:"",Blo:"No"},
+            {Tit:"Terminado",Cmp:"FecHorTer",Tip:"FechaHora",Req:"No",VD:"0000-00-00 00:00:00",Val:"",Blo:"No"},
+
+            {Tit:"Estatus",Cmp:"Estatus",Tip:"Select",Req:"Si",VD:"Nueva",Val:"",Opcs:[
+              {Val:"Nueva",Tex:"Nueva",Dis:""},
+              {Val:"Asignada",Tex:"Asignada",Dis:""},
+              {Val:"En proceso",Tex:"En proceso",Dis:""},
+              {Val:"Entregada",Tex:"Entregada",Dis:""},
+              {Val:"Cancelada",Tex:"Cancelada",Dis:""},
+            ]},
+          ],
+          BorEst:"Si",
+          OpcFil:"Si",
+          OpcReg:"Si",
+          OpcAgr:"Si",
+          OpcMod:"Si",
+          OpcEli:"Si",
+          CamQry:"*",
+          Tabla:"ferreterias",
           Donde:"",
           Ordena:"ORDER BY NRegistro DESC",
           Carpeta:"asi",
@@ -2529,8 +2573,9 @@ export class AdmComponent {
   //////////////////////////////////Rentas - Ventas///////////////////////////
   CarDetRen(Ren){
     this.DetDat = Ren;
-    this.DetDat.NRegTec = "";
-    this.CarLisTecAsi();
+    if (this.DetDat.NRegTec == "0"){this.DetDat.NRegTec = "";}
+    this.CarLisTecRen();
+    this.CarLisHerRen();
   }
 
   AsiTecRen(){
@@ -2558,7 +2603,57 @@ export class AdmComponent {
       this.DetDat.LisTec = Res.data;
     }).catch((err)=>{console.log(err)});
   }
+  CarLisHerRen(){
+    this.servicios.AccSobBDAA("SELECT","Si","*,(SELECT Foto FROM herramientasdis WHERE NRegistro=A.NRegDis) FotHer,(SELECT Nombre FROM herramientasdis WHERE NRegistro=A.NRegDis) NomHer,(SELECT Marca FROM herramientasdis WHERE NRegistro=A.NRegDis) MarHer,(SELECT Modelo FROM herramientasdis WHERE NRegistro=A.NRegDis) ModHer,(SELECT Existencia FROM herramientasdis WHERE NRegistro=A.NRegDis) ExiHer","","","herramientasdet A","WHERE NRegHer="+this.DetDat.NRegistro,"","",false).then((dataRes)=>{
+      let Res: any = dataRes;
+      console.log(Res);
+      this.DetDat.LisHer = Res.data;
+    }).catch((err)=>{console.log(err)});
+  }
   //////////////////////////////////Rentas - Ventas///////////////////////////
+
+
+  //////////////////////////////////Ferreterías///////////////////////////////
+  CarDetFer(Fer){
+    this.DetDat = Fer;
+    if (this.DetDat.NRegTec == "0"){this.DetDat.NRegTec = "";}
+    this.CarLisTecFer();
+    this.CarLisHerFer();
+  }
+
+  AsiTecFer(){
+    if (!this.servicios.ValCam("IBNRegTec","Técnico","Texto",this.DetDat.NRegTec,"Si")){return}
+
+    let NueEst = "Asignada";
+    let CyV = "NRegTec=|"+this.DetDat.NRegTec+"|,Estatus=|"+NueEst+"|,FecHorAsi=NOW()";
+    this.servicios.AccSobBDAA("UPDATE","No","","",CyV,"ferreterias","WHERE NRegistro="+this.DetDat.NRegistro+"","","",false).then((dataRes)=>{
+      let Res: any = dataRes;
+      //console.log(Res);
+      this.CarLis();
+      this.servicios.EnvNot(this.DetDat.NRegCli,"Pedido Asignado","Tu pedido fue asignado","Ferreterías",this.DetDat.NRegistro)
+      this.servicios.EnvNot(this.DetDat.NRegTec,"Pedido Asignado","Tienes una nuevo pedido asignada","Ferreterías",this.DetDat.NRegistro)
+
+      this.CloModAsiFer.nativeElement.click();
+      this.servicios.EnvMsgSim("La Asistencia fue asignada","Hecho")
+    }).catch((err)=>{console.log(err)});
+
+  }
+
+  CarLisTecFer(){
+    this.servicios.AccSobBDAA("SELECT","Si","*","","","usuarios","WHERE Tipo=|Tecnico| AND Estatus=|Activo|","","",false).then((dataRes)=>{
+      let Res: any = dataRes;
+      //console.log(Res);
+      this.DetDat.LisTec = Res.data;
+    }).catch((err)=>{console.log(err)});
+  }
+  CarLisHerFer(){
+    this.servicios.AccSobBDAA("SELECT","Si","*,(SELECT Foto FROM ferreteriaspro WHERE NRegistro=A.NRegPro) FotHer,(SELECT Nombre FROM ferreteriaspro WHERE NRegistro=A.NRegPro) NomHer,(SELECT Marca FROM ferreteriaspro WHERE NRegistro=A.NRegPro) MarHer,(SELECT Modelo FROM ferreteriaspro WHERE NRegistro=A.NRegPro) ModHer,(SELECT Existencia FROM ferreteriaspro WHERE NRegistro=A.NRegPro) ExiHer","","","ferreteriasdet A","WHERE NRegFer="+this.DetDat.NRegistro,"","",false).then((dataRes)=>{
+      let Res: any = dataRes;
+      console.log(Res);
+      this.DetDat.LisPro = Res.data;
+    }).catch((err)=>{console.log(err)});
+  }
+  //////////////////////////////////Ferreterías///////////////////////////////
 
 
 
@@ -2598,7 +2693,7 @@ export class AdmComponent {
     this.servicios.DGF = {Acc:Acc,Dat:Dat,DGM:this.DGM};
   }
 
-  Detalles(Dat){
+  CarDet(Dat){
     this.DetDat = Dat
   }
 
