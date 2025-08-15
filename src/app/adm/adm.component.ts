@@ -248,19 +248,19 @@ export class AdmComponent {
   }
 
   ActGraA(){
-    this.servicios.AccSobBDAA("SELECT","Si","MONTH(FecHorEve) Mes, COUNT(FecHorEve) TM","","","eventos","WHERE "+(this.servicios.UsuMat.Tipo == "Tecnico" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Mes","",true).then((dataRes)=>{
+    this.servicios.AccSobBDAA("SELECT","Si","MONTH(FecHorReg) Mes, COUNT(FecHorReg) TM","","","asistencias","","GROUP BY Mes","",true).then((dataRes)=>{
       let Res: any = dataRes;
-      console.log(Res);
+      // console.log(Res);
       let DatMes = [0,0,0,0,0,0,0,0,0,0,0,0]
       for (let n = 0; n < Res.data.length; n++) {
         DatMes[(Res.data[n].Mes-1)] = parseFloat(Res.data[n].TM)
       }
-      setTimeout(() => {this.GraAEle.updateSeries([{name: "Servicios",data: DatMes}])}, 500);
+      setTimeout(() => {this.GraAEle.updateSeries([{name: "Asistencias",data: DatMes}])}, 500);
     }).catch((err)=>{console.log(err)});
   }
 
   ActGraB(){
-    this.servicios.AccSobBDAA("SELECT","Si","(SELECT Nombre FROM categorias WHERE NRegistro=A.Categorias) NC, COUNT(Categorias) TC","","","servicios A","WHERE "+(this.servicios.UsuMat.Tipo == "Tecnico" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Categorias","",true).then((dataRes)=>{
+    this.servicios.AccSobBDAA("SELECT","Si","(Tipo) NC, COUNT(Tipo) TC","","","asistencias A","","GROUP BY Tipo","",true).then((dataRes)=>{
       let Res: any = dataRes;
       // console.log(Res);
       let EtiCat = []
@@ -278,9 +278,9 @@ export class AdmComponent {
   }
 
   ActGraC(){
-    this.servicios.AccSobBDAA("SELECT","Si","(SELECT Nombre FROM categorias WHERE NRegistro=A.Categorias) NC, COUNT(Categorias) TC","","","servicios A","WHERE "+(this.servicios.UsuMat.Tipo == "Tecnico" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Categorias","",true).then((dataRes)=>{
+    this.servicios.AccSobBDAA("SELECT","Si","(SELECT Nombre FROM usuarios WHERE NRegistro=A.NRegTec) NC, COUNT(NRegTec) TC","","","asistencias A","WHERE NRegTec!=0","GROUP BY NRegTec","",true).then((dataRes)=>{
       let Res: any = dataRes;
-      // console.log(Res);
+      console.log(Res);
       let DatCat = [];
       for (let n = 0; n < Res.data.length; n++) {
         DatCat.push({x:Res.data[n].NC,y:Res.data[n].TC});
@@ -292,7 +292,7 @@ export class AdmComponent {
   }
 
   ActGraD(){
-    this.servicios.AccSobBDAA("SELECT","Si","MONTH(FecHorEve) Mes, COUNT(FecHorEve) TM","","","eventos","WHERE "+(this.servicios.UsuMat.Tipo == "Tecnico" ? " NRegUsu = "+this.servicios.UsuMat.NRegistro+"" : "1=1"),"GROUP BY Mes","",true).then((dataRes)=>{
+    this.servicios.AccSobBDAA("SELECT","Si","MONTH(FecHorReg) Mes, COUNT(FecHorReg) TM","","","ferreterias","","GROUP BY Mes","",true).then((dataRes)=>{
       let Res: any = dataRes;
       // console.log(Res);
       let DatMes = [0,0,0,0,0,0,0,0,0,0,0,0]
@@ -300,7 +300,7 @@ export class AdmComponent {
         DatMes[(Res.data[n].Mes-1)] = Res.data[n].TM
       }
       setTimeout(() => {
-        this.GraDEle.updateSeries([{name: "Envios",data: DatMes}])
+        this.GraDEle.updateSeries([{name: "Pedidos",data: DatMes}])
       }, 500);
     }).catch((err)=>{console.log(err)});
   }
